@@ -13,10 +13,8 @@ public interface TeamRepository extends JpaRepository<Team,Integer> {
     List<Team> findByLeague(League league);
 
 
-    @Query("SELECT t FROM Team t WHERE t.league.name = :leagueName")
     List<Team> findByLeagueName(@Param("leagueName") String leagueName);
 
     // Benutzerdefinierte Abfrage mit JOIN
-    @Query("SELECT t FROM Team t WHERE t.league.id = :leagueId")
     List<Team> findByLeagueId(@Param("leagueId") String leagueId);
 }

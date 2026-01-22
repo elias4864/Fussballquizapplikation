@@ -1,5 +1,6 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -11,64 +12,78 @@ import java.util.List;
 public class Question {
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String question;
 
-    @Column(name = "correct_answer", nullable = false)
     private String correctAnswer;
 
-    @Column(name = "wrong_answer1")
-    private String wronganswer1;
+    private String wrong_answer1;
 
-    @Column(name = "wrong_answer2")
-    private String wronganswer2;
+    private String wrong_answer2;
 
-    @Column(name = "wrong_answer3")
-    private String wronganswer3;
+    private String wrong_answer3;
 
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
+    @JsonBackReference
     private Category category; // <--- Dieser Name muss mit 'mappedBy' übereinstimmen!
     @ManyToOne
     @JoinColumn(name = "player_id")
+    @JsonBackReference
     private Player player;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "league_id",columnDefinition = "VARCHAR(10)")
+    private League league;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Answer> answers = new ArrayList<>();
 
-    public enum Difficulty { leicht, mittel, schwer }
+    public enum Difficulty {leicht, mittel, schwer}
+
+    ;
 
     // Standard-Konstruktor (für JPA)
-    public Question() {}
+    public Question() {
+    }
 
-    // Konstruktor für deine Logik
-    public Question(String question, String correctAnswer, String wronganswer1, String wronganswer2, String wronganswer3, Difficulty difficulty, Category category) {
+    ;
+
+    // Konstruktor für deine Logik mit Attributen
+    public Question(String question, String correctAnswer, String wrong_answer1, String wrong_answer2, String wrong_answer3, Difficulty difficulty, Category category) {
         this.question = question;
         this.correctAnswer = correctAnswer;
-        this.wronganswer1 = wronganswer1;
-        this.wronganswer2 = wronganswer2;
-        this.wronganswer3 = wronganswer3;
-        this.difficulty = difficulty;
+        this.wrong_answer1 = wrong_answer1;
+        this.wrong_answer2 = wrong_answer2;
+        this.wrong_answer3 = wrong_answer3;
+        this.difficulty = difficulty; // Jetzt korrekt vom Typ Difficulty
         this.category = category;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getQuestion() {
         return question;
     }
 
+
     public void setQuestion(String question) {
         this.question = question;
     }
-
     public String getCorrectAnswer() {
         return correctAnswer;
     }
@@ -77,8 +92,36 @@ public class Question {
         this.correctAnswer = correctAnswer;
     }
 
-    public Integer getId() {
-        return id;
+    public String getWrong_answer1() {
+        return wrong_answer1;
+    }
+
+    public void setWrong_answer1(String wrong_answer1) {
+        this.wrong_answer1 = wrong_answer1;
+    }
+
+    public String getWrong_answer2() {
+        return wrong_answer2;
+    }
+
+    public void setWrong_answer2(String wrong_answer2) {
+        this.wrong_answer2 = wrong_answer2;
+    }
+
+    public String getWrong_answer3() {
+        return wrong_answer3;
+    }
+
+    public void setWrong_answer3(String wrong_answer3) {
+        this.wrong_answer3 = wrong_answer3;
+    }
+
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
     }
 
     public Difficulty getDifficulty() {
@@ -87,10 +130,6 @@ public class Question {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Category getCategory() {
@@ -116,32 +155,9 @@ public class Question {
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
-
-
-    public String getWronganswer1() {
-        return wronganswer1;
-    }
-
-    public void setWronganswer1(String wronganswer1) {
-        this.wronganswer1 = wronganswer1;
-    }
-
-    public String getWronganswer2() {
-        return wronganswer2;
-    }
-
-    public void setWronganswer2(String wronganswer2) {
-        this.wronganswer2 = wronganswer2;
-    }
-
-    public String getWronganswer3() {
-        return wronganswer3;
-    }
-
-    public void setwronganswer3(String wronganswer3) {
-        this.wronganswer3 = wronganswer3;
-    }
 }
+
+
 
 
 

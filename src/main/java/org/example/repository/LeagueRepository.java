@@ -11,8 +11,8 @@ import java.util.Optional;
 
 public interface LeagueRepository extends JpaRepository<League, String> {
 
+
     League findByName(String name);  // korrekte Schreibweise (mit Großbuchstabe B)
-    @Query("SELECT l FROM League l WHERE l.id = :id")
     Optional<League> findLById(@Param("id") String id);
 
     List<League> findAllByName(String name);

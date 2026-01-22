@@ -1,9 +1,7 @@
 package org.example.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -13,12 +11,14 @@ import java.util.List;
 public class League {
 
     @Id
-    @Column(length = 10)
+    @Column(length = 10) // Verhindert den Versuch, auf 255 zu ändern
     private String id;
 
-    @Column(nullable = false, length = 200)
     private String name;
 
+    @OneToMany(mappedBy = "league")
+    @JsonManagedReference // Zeigt die Liste der Teams an, wenn eine Liga geladen wird
+    private List<Team> teams;
 
     public League(){
 
@@ -28,7 +28,6 @@ public class League {
         this.name = name;
     }
 
-    // GETTER / SETTER
     public String getId() {
         return id;
     }
@@ -43,6 +42,14 @@ public class League {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
     @Override

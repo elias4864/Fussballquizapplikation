@@ -14,47 +14,78 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "answer_text", nullable = false, length = 300)
-    private String answerText;
-
-    @Column(name = "is_correct")
-    private Boolean isCorrect;
 
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "question_id")
+    @JsonBackReference
+    private Question question;
+
+
+    @OneToOne
+    @JoinColumn(name = "category_id") // Dies erzeugt die Spalte category_id in der Tabelle answer
+    @JsonBackReference
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "player_id")
+    @JsonBackReference // Korrekt: Player ist "Elternteil"
     private Player player;
 
-
     @ManyToOne
-    @JoinColumn(name = "league_id")
-    private League league;
-
-
-    @ManyToOne
-    @JoinColumn(name = "question_id", nullable = false)
-
-    private Question question;
-
-
-    @ManyToOne
-    @JoinColumn(name = "team_id")
+    @JoinColumn(name = "team_id") // Verweist auf team(id) in der DB
     private Team team;
 
 
+    @ManyToOne
+    @JoinColumn(name = "league_id",columnDefinition = "VARCHAR(10)")
+    private League league;
+
 
     // Standard-Konstruktor
-    public Answer() {}
+    public Answer() {
+    }
 
+    public Player getPlayer() {
+        return player;
+    }
 
-    // Getter & Setter
-    public Integer getId() { return id; }
-    public String getAnswerText() { return answerText; }
-    public void setAnswerText(String answerText) { this.answerText = answerText; }
-    public Question getQuestion() { return question; }
-    public void setQuestion(Question question) { this.question = question; }
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }
+
+
+

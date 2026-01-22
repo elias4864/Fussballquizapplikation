@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+import static java.util.Arrays.stream;
+
 @RestController
 @RequestMapping("/answers")
 public class AnswerController {
 
+    @Autowired
     private final AnswerService answerService;
 
     public AnswerController(AnswerService answerService) {
@@ -23,12 +26,19 @@ public class AnswerController {
         return answerService.getAllAnswers();
     }
 
+
+
+
     @GetMapping("/question/{id}")
-    public List<Answer> getAnswersForQuestion(@PathVariable int id) {
-        return answerService.getAnswersForQuestion(id);
+    public List<Answer> getAnswersByQuestion(@PathVariable Integer question_id) {
+        // Falls du eine Methode im Repository definierst:
+        // return answerRepository.findByQuestionId(questionId);
+        return answerService.getAnswersForQuestion(question_id).stream()
+                .filter(a -> a.getQuestion().getId().equals(question_id))
+                .toList();
     }
 
-    @PostMapping("/addanswer")
+    @PutMapping("/addanswer")
     public Answer addAnswer(@RequestBody Answer answer) {
         return answerService.addAnswer(answer);
     }

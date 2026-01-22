@@ -19,8 +19,8 @@ public class Team {
 
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JsonBackReference
     @JoinColumn(name = "league_id")
+    @JsonBackReference
     private League league;
 
     public  Team(){

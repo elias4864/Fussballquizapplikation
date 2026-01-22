@@ -21,22 +21,26 @@ public class CategoryController {
     }
 
 
-    @GetMapping("/allanswers")
+            //Alle Antworten  der Liste
+
+    @GetMapping("/")
     public List<Category> getAll() {
         return service.getAllCategories();
     }
 
+
+        //Category Id
     @GetMapping("/{id}")
     public Category getById(@PathVariable Integer id) {
         return service.getCategoryById(id);
     }
-
+    //
     @PostMapping("/save")
     public Category save(@RequestBody Category category) {
         return service.saveCategory(category);
     }
-
-    @DeleteMapping("/category/{id}")
+    //Category löschen
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         service.deleteCategory(id);
     }

@@ -1,6 +1,9 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -8,24 +11,46 @@ import java.util.List;
 public class Category {
 
 
-
+    /**
+     * Auto generiertes Attribut id, damit Datn automatisch geladen werden
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
 
+    /**
+     *Attribut name
+     */
     @Column(name = "category_name", nullable = false)
     private String name;
+
+    /**
+     *Team Attribut wird hinzugefügt
+     */
     @Column(name="team")
     private String team;
+
+
+
+    /**
+     * Positition Attibut
+     */
     @Column(name="position")
     private String position;
     @Column(name="nationality")
     private String nationality;
 
     //One to Many Beziehung eien Kategorie hat mehrere Fragen
-        @OneToMany(mappedBy = "category")
-    private List<Question> questions;
+        @OneToOne(mappedBy = "category")
+       private Question question;
+
+
+    @OneToOne(mappedBy = "category") // 'category' ist der Feldname in der Klasse Answer
+    @JsonManagedReference
+    private Answer answer;
+
+
 
     public Category(){
 
@@ -51,6 +76,22 @@ public class Category {
 
     public String getName() {
         return name;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 
     public void setName(String name) {
@@ -81,11 +122,5 @@ public class Category {
         this.nationality = nationality;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
-    }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
 }

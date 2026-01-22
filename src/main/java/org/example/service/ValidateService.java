@@ -10,7 +10,7 @@ public class ValidateService {
 
     private final PlayerValidierung playerValidator;
 
-    // MANUELLER KONSTRUKTOR
+    // MANUELLER KONSTRUKT
     public ValidateService(PlayerValidierung playerValidator) {
         this.playerValidator = playerValidator;
     }

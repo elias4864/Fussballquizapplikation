@@ -19,8 +19,12 @@ public class QuestionController {
 
 
 
-
+    @Autowired
     private QuestionRepository questionRepository;
+
+    public QuestionController(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
 
     // GET: Alle Fragen abrufen
     @GetMapping("/allquestions")
@@ -28,28 +32,42 @@ public class QuestionController {
         return questionRepository.findAll();
     }
 
-    // GET: Eine einzelne Frage nach ID mvabrufen
+    /**
+     * Bestimmte Frage nach  ID abfragen
+     *
+     * @return
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<Question> getQuestionById(@PathVariable Integer id) {
-        return questionRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-    private final QuestionService questionService;
-
-    public QuestionController(QuestionService questionService) {
-        this.questionService = questionService;
+    public Question getQuestionById(@PathVariable Integer id) {
+        // Jetzt ist questionRepository nicht mehr null
+        return questionRepository.findById(id).orElse(null);
     }
 
-
-    @PutMapping("/addquestion")
+    @PutMapping("/add")
     public Question addQuestion(@RequestBody Question question) {
-        return questionService.addQuestion(question);
+        return questionRepository.save(question);
     }
 
+
+    /**
+     * Neue Fragen hinzufügen
+     */
+
+
+
+    /**
+     *
+     *
+     */
     @DeleteMapping("/delete/{id}")
-    public void deleteQuestion(@PathVariable int id) {
-        questionService.deleteQuestion(id);
+    public void deleteQuestion(@PathVariable Integer id) {
+        // void, da delete keinen Rückgabewert hat
+        questionRepository.deleteById(id);
+    }
+
+    @PostMapping
+    public Question createQuestion(@RequestBody Question question) {
+        return questionRepository.save(question);
     }
 
 

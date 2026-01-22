@@ -14,10 +14,15 @@ import java.util.List;
 @RequestMapping("/api/quiz")
 public class QuizController {
 
+
+    /**  Kontrollilert das QuestionRepostory
+     *
+     */
     private final QuestionRepository questionRepository;
+    //Kontrolliert das AnswerRepository
     private final AnswerRepository answerRepository;
 
-
+        //Quiz KOntroller KOnstruktor
     public QuizController(QuestionRepository questionRepository, AnswerRepository answerRepository) {
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
@@ -33,11 +38,10 @@ public class QuizController {
     }
 
 
-    /**
-     * Gibt eine spezifische Frage anhand der ID zurück.
+
 
     /**
-     * Speichert eine neue Antwort eines Spielers in der Datenbank.
+     * Speichert eine neue Antwort eines Spielers in der Datenbank ab.
      */
     @PostMapping("/answers")
     public Answer submitAnswer(@RequestBody Answer answer) {
@@ -47,9 +51,11 @@ public class QuizController {
     /**
      * Erstellt eine neue Frage (z.B. für einen Admin-Bereich).
      */
-    @PostMapping("/questions")
-    public Question createQuestion(@RequestBody Question question) {
-        return questionRepository.save(question);
+    @GetMapping("/questions/{questionId}/answers")
+    public ResponseEntity<List<Answer>> getAnswersByQuestionId(@PathVariable Integer questionId) {
+        List<Answer> answers = answerRepository.findAll().stream()
+                .filter(a -> a.getQuestion() != null && a.getQuestion().getId().equals(questionId))
+                .toList();
+        return ResponseEntity.ok(answers);
     }
-
 }

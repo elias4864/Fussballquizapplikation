@@ -1,38 +1,93 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //Tabelle Player mit F 1. Entitität
 @Entity
 @Table(name="player")
 public class Player {
 
+    /**
+     * @version: elias
+     * @param:
+     */
 
+    /**
+     * Id automatisch generieren
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    /**
+     * FirstName
+     */
+
     @Column(name = "first_name", length = 100)
     private String firstName;
 
+
+    /**
+     * lastName
+     */
     @Column(name = "last_name", length = 200)
     private String lastName;
+
+
+    /**
+     * Geburtstag
+     */
 
     @Column(name = "birth_year")
     private Integer birthYear;
 
+    /**
+     * Postition
+     */
+
     @Enumerated(EnumType.STRING)
     private Position position;
+
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    @JsonBackReference(value = "team-player")
+    private Team team;
+
+    /**
+     * Managed Reference der Player Tabelle und Antowrten Liste
+     */
+
+
+    @OneToMany (mappedBy = "player")
+    @JsonManagedReference
+    private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "player")
+    @JsonManagedReference // Der Player zeigt seine Antworten an
+    private List<Answer> answers = new ArrayList<>();
+
+    /**
+     * Nationalität
+     */
     @Column(name="nationality")
     private String nationality;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "team_id",nullable = false)
-    @JsonBackReference
-    private Team team;
+
     @Column(name="stats")
     private String stats;
+
+
+    /**
+     *Ist Spieler aktiv
+     */
 
     private boolean isactive;
 
@@ -41,7 +96,10 @@ public class Player {
         Torwart, Verteidiger, Mittelfeld, Sturm
     }
 
-    //Leerer Konstruktor
+    /**
+     * Leerer Konstruktor
+     */
+
     public Player() {
     }
     public Player(Integer id,String firstName,String lastName,Integer birthYear,Position position,String nationality, Team team, String stats, boolean isactive) {
@@ -58,6 +116,22 @@ public class Player {
 
     public Integer getId() {
         return id;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     public void setId(Integer id) {
