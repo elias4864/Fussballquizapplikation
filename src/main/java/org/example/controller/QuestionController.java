@@ -19,7 +19,7 @@ public class QuestionController {
 
 
 
-    @Autowired
+
     private QuestionRepository questionRepository;
 
     // GET: Alle Fragen abrufen
@@ -42,7 +42,7 @@ public class QuestionController {
     }
 
 
-    @PostMapping("/addquestion")
+    @PutMapping("/addquestion")
     public Question addQuestion(@RequestBody Question question) {
         return questionService.addQuestion(question);
     }

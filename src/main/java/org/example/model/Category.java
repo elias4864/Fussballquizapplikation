@@ -16,11 +16,11 @@ public class Category {
 
     @Column(name = "category_name", nullable = false)
     private String name;
-
+    @Column(name="team")
     private String team;
-
+    @Column(name="position")
     private String position;
-
+    @Column(name="nationality")
     private String nationality;
 
     //One to Many Beziehung eien Kategorie hat mehrere Fragen

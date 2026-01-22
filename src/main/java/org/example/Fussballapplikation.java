@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test/api")
 public class Fussballapplikation {
 
+    //Main Applikation
     public static void main(String[] args) {
         SpringApplication.run(Fussballapplikation.class, args);}
 

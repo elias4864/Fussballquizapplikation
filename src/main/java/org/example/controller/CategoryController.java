@@ -14,13 +14,11 @@ import java.util.List;
 
 public class CategoryController {
 
-    @Autowired
     private final CategoryService service;
 
     public CategoryController(CategoryService service) {
         this.service = service;
     }
-
 
 
     @GetMapping("/allanswers")
@@ -33,7 +31,7 @@ public class CategoryController {
         return service.getCategoryById(id);
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public Category save(@RequestBody Category category) {
         return service.saveCategory(category);
     }

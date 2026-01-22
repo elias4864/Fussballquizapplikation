@@ -17,7 +17,7 @@ public class QuizController {
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
 
-    @Autowired
+
     public QuizController(QuestionRepository questionRepository, AnswerRepository answerRepository) {
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;

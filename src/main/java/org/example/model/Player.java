@@ -1,5 +1,6 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 //Tabelle Player mit F 1. Entitität
@@ -23,18 +24,19 @@ public class Player {
 
     @Enumerated(EnumType.STRING)
     private Position position;
-
+    @Column(name="nationality")
     private String nationality;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "team_id",nullable = false)
+    @JsonBackReference
     private Team team;
-
+    @Column(name="stats")
     private String stats;
 
     private boolean isactive;
 
-    //  Separate Enum Box mit  definierten Werten entweder kann ein Spieler Torwart, Verteidiger oder MItteldfeld oder Sturm als Value haben
+    //  Separate  Enum Box mit  definierten Werten entweder kann ein Spieler Torwart, Verteidiger oder MItteldfeld oder Sturm als Value haben
     public enum Position {
         Torwart, Verteidiger, Mittelfeld, Sturm
     }

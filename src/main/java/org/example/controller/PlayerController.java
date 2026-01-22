@@ -12,23 +12,25 @@ public class PlayerController {
 
 
 
-@Autowired
     private final PlayerService playerService;
 
     public PlayerController(PlayerService playerService) {
         this.playerService = playerService;
     }
 
+
+    //Player
     @GetMapping("/players")
     public List<Player> getPlayers() {
         return playerService.getAllPlayers();
     }
-
+    //Player byId
     @GetMapping("/{id}")
     public Player getById(@PathVariable int id) {
         return playerService.getPlayer(id);
     }
 
+    //** ALle Aktiven SPieler
     @GetMapping("/active")
     public List<Player> findByIsActiveTrue() {
         return playerService.getActivePlayers();
@@ -44,7 +46,7 @@ public class PlayerController {
 
 
 
-    @GetMapping("/addplayer")
+    @PostMapping ("/addplayer")
     public Player createPlayer(@RequestBody Player player) {
         // Speichert den Spieler, der als JSON im Request-Body gesendet wird
         return  playerService.addPlayer(player);

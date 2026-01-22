@@ -11,7 +11,6 @@ public interface PlayerRepository extends JpaRepository<Player,Integer> {
     // alle inaktiven Spieler
     List<Player> findByIsactiveFalse();
     List<Player> findByNationality(String nationality);
-    List<Player> findPlayer();
 
 
 }

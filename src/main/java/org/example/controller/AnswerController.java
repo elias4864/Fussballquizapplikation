@@ -10,12 +10,13 @@ import java.util.List;
 @RequestMapping("/answers")
 public class AnswerController {
 
-    @Autowired
     private final AnswerService answerService;
 
     public AnswerController(AnswerService answerService) {
         this.answerService = answerService;
     }
+
+
 
     @GetMapping("/allanswers")
     public List<Answer> getAllAnswers() {

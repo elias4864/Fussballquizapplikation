@@ -1,5 +1,6 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import static jakarta.persistence.FetchType.EAGER;
@@ -18,6 +19,7 @@ public class Team {
 
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JsonBackReference
     @JoinColumn(name = "league_id")
     private League league;
 

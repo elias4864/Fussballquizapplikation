@@ -20,14 +20,32 @@ public class Answer {
     @Column(name = "is_correct")
     private Boolean isCorrect;
 
-    @ManyToOne
-    @JoinColumn(name = "question_id", nullable = false)
-    @JsonBackReference
-    private Question question;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "player_id")
+    private Player player;
+
+
+    @ManyToOne
+    @JoinColumn(name = "league_id")
+    private League league;
+
+
+    @ManyToOne
+    @JoinColumn(name = "question_id", nullable = false)
+
+    private Question question;
+
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
+
 
     // Standard-Konstruktor
     public Answer() {}
