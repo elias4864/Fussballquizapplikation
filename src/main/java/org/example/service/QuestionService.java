@@ -31,4 +31,8 @@ public class QuestionService {
     public void deleteQuestion(int id) {
         questionRepository.deleteById(id);
     }
+
+    public List<Question> getRandomQuiz(int amount) {
+        return questionRepository.findRandomQuestions(amount);
+    }
 }

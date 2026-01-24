@@ -12,11 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test/api")
 public class Fussballapplikation {
 
-    //Main Applikation
+    /**
+     *  Runnable Main Applikation
+     *
+     *
+     */
     public static void main(String[] args) {
         SpringApplication.run(Fussballapplikation.class, args);}
 
 
+    /**
+     * Test Request für Funktionalität Rest APplikation mit Greeting HTTP Methode
+     * @param name
+     * @return name
+     */
     @GetMapping("/greetings")
     public ResponseEntity<String> sayHelloWorld(@RequestParam(defaultValue= "World") String name) {
         return ResponseEntity.ok("Hello "+ name);

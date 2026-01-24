@@ -2,6 +2,8 @@ package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ public class Category {
 
 
     /**
-     * Auto generiertes Attribut id, damit Datn automatisch geladen werden
+     * Automatisch geneirtet Attribut id  das Primary Key
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +35,7 @@ public class Category {
 
 
 
+
     /**
      * Positition Attibut
      */
@@ -41,14 +44,16 @@ public class Category {
     @Column(name="nationality")
     private String nationality;
 
-    //One to Many Beziehung eien Kategorie hat mehrere Fragen
-        @OneToOne(mappedBy = "category")
-       private Question question;
+    @OneToMany(mappedBy = "category")
+    @JsonManagedReference(value = "category-answer")
+    private List<Answer> answers = new ArrayList<>();
 
 
-    @OneToOne(mappedBy = "category") // 'category' ist der Feldname in der Klasse Answer
-    @JsonManagedReference
-    private Answer answer;
+
+    @OneToMany(mappedBy = "category")
+    @JsonManagedReference(value = "category-question")
+    private List<Question> questions = new ArrayList<>();
+
 
 
 
@@ -78,20 +83,21 @@ public class Category {
         return name;
     }
 
-    public Question getQuestion() {
-        return question;
+
+    public List<Answer> getAnswers() {
+        return answers;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
-    public Answer getAnswer() {
-        return answer;
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
     public void setName(String name) {

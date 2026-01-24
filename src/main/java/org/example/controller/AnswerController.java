@@ -12,12 +12,19 @@ import static java.util.Arrays.stream;
 @RequestMapping("/answers")
 public class AnswerController {
 
-    @Autowired
+
+    /**
+     * AnswerService der alle Methoden  fpr die AnswerController initialisiert
+     */
     private final AnswerService answerService;
 
+    /**
+     * Konstruktor mit Dependency Incetion der zur  AnswerService
+     */
     public AnswerController(AnswerService answerService) {
         this.answerService = answerService;
     }
+
 
 
 
@@ -27,20 +34,19 @@ public class AnswerController {
     }
 
 
-
+    /**
+     * Filtert alle  Datensätze aus der Answer List  basierend auf der Id der zugehörigen Frage und füg
+     * @param id
+     * @return Alle Datensätze welche eine zugehörigen Frage anhand der Id angehören werden durch mit einem Stream gefiltert und mit eien Lamda Expression abefragt ob sie eine bestimtem Id entsprechen und dann zu einer neuen Liste hinzugefügt
+     */
 
     @GetMapping("/question/{id}")
-    public List<Answer> getAnswersByQuestion(@PathVariable Integer question_id) {
+    public List<Answer> getAnswersByQuestion(@PathVariable Integer id) {
         // Falls du eine Methode im Repository definierst:
         // return answerRepository.findByQuestionId(questionId);
-        return answerService.getAnswersForQuestion(question_id).stream()
-                .filter(a -> a.getQuestion().getId().equals(question_id))
+        return answerService.getAnswersForQuestion(id).stream()
+                .filter(a -> a.getQuestion().getId().equals(id))
                 .toList();
-    }
-
-    @PutMapping("/addanswer")
-    public Answer addAnswer(@RequestBody Answer answer) {
-        return answerService.addAnswer(answer);
     }
 
 

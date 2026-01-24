@@ -8,6 +8,12 @@ import java.util.List;
 @Service
 public class AnswerService {
 
+    /**
+     * Service-Klasse für die Verwaltung von Antworten (Answers).
+     * Diese Klasse enthält die Geschäftslogik und dient als Schnittstelle
+     * zwischen dem AnswerController und dem AnswerRepository.
+     *
+     */
 
     private final AnswerRepository answerRepository;
 
@@ -27,6 +33,8 @@ public class AnswerService {
                         && a.getId() == questionId)
                 .toList();
     }
+
+
 
     public Answer addAnswer(Answer a) {
         return answerRepository.save(a);

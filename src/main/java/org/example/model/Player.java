@@ -12,13 +12,16 @@ import java.util.List;
 @Table(name="player")
 public class Player {
 
-    /**
-     * @version: elias
-     * @param:
-     */
 
     /**
-     * Id automatisch generieren
+     *  @author elias
+     *   @version 1.0
+     */
+
+
+
+    /**
+     * Id automatisch generierte
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,21 +36,23 @@ public class Player {
 
 
     /**
-     * lastName
+     * lastName Row wird hinzugefügt
      */
     @Column(name = "last_name", length = 200)
     private String lastName;
 
 
     /**
-     * Geburtstag
+     * Attribut birth_year
+     * @param birthYear
+     * @return Integer
      */
 
     @Column(name = "birth_year")
     private Integer birthYear;
 
     /**
-     * Postition
+     * Position mit Aufzählungen(Enums) Values entweder  Torwart, Mitelfeld, Sturm oder erteidiger
      */
 
     @Enumerated(EnumType.STRING)
@@ -58,7 +63,7 @@ public class Player {
 
     @ManyToOne
     @JoinColumn(name = "team_id")
-    @JsonBackReference(value = "team-player")
+    @JsonBackReference
     private Team team;
 
     /**
@@ -66,13 +71,19 @@ public class Player {
      */
 
 
-    @OneToMany (mappedBy = "player")
+    @OneToOne
+    @JoinColumn(name = "question_id")
     @JsonManagedReference
-    private List<Question> questions = new ArrayList<>();
+    private Question question;
 
     @OneToMany(mappedBy = "player")
-    @JsonManagedReference // Der Player zeigt seine Antworten an
+    @JsonManagedReference
     private List<Answer> answers = new ArrayList<>();
+
+
+
+
+
 
     /**
      * Nationalität
@@ -86,7 +97,7 @@ public class Player {
 
 
     /**
-     *Ist Spieler aktiv
+     *Attribute iactive mit boolean überprufen ob Aussage wahr oder falsch ist.
      */
 
     private boolean isactive;
@@ -118,12 +129,12 @@ public class Player {
         return id;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public List<Answer> getAnswers() {
@@ -201,7 +212,6 @@ public class Player {
     public void setIsactive(boolean isactive) {
         this.isactive = isactive;
     }
-
 
     @Override
     public String toString() {

@@ -1,6 +1,7 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -31,20 +32,23 @@ public class Question {
     private Difficulty difficulty;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    @JsonBackReference
-    private Category category; // <--- Dieser Name muss mit 'mappedBy' übereinstimmen!
-    @ManyToOne
-    @JoinColumn(name = "player_id")
-    @JsonBackReference
+    @JoinColumn(name = "category_id")
+    @JsonBackReference(value ="category-questions" )
+    private Category category;
+    // <--- Dieser Name muss mit 'mappedBy' übereinstimmen!
+
+    @OneToOne(mappedBy = "question")
+    @JsonBackReference(value = "player-question")
     private Player player;
+
 
     @ManyToOne
     @JoinColumn(name = "league_id",columnDefinition = "VARCHAR(10)")
+    @JsonBackReference
     private League league;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference(value="question-answer")
     private List<Answer> answers = new ArrayList<>();
 
     public enum Difficulty {leicht, mittel, schwer}

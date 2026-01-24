@@ -15,14 +15,18 @@ import java.util.List;
 public class QuizController {
 
 
-    /**  Kontrollilert das QuestionRepostory
-     *
+    /**  Kontrollilert das QuestionRepostory und ladet alle bentöig Methoden für di ANser ujd Question Tabelle
+     * Dependency Incjection
      */
     private final QuestionRepository questionRepository;
     //Kontrolliert das AnswerRepository
     private final AnswerRepository answerRepository;
 
-        //Quiz KOntroller KOnstruktor
+    /**
+     * KOnstruktor der QuizController KLasse
+     * @param questionRepository
+     * @param answerRepository
+     */
     public QuizController(QuestionRepository questionRepository, AnswerRepository answerRepository) {
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
@@ -30,8 +34,13 @@ public class QuizController {
 
 
     /**
-     * Gibt alle Fragen aus der Datenbank zurück.
-     */
+     * Gibt eine Liste Questions mti allen Fragen der Datenbank wird ausgegeben
+     *
+     * @return questions alle Fragen
+     *
+     *
+     * */
+
     @GetMapping("/questions")
     public List<Question> getAllQuestions() {
         return questionRepository.findAll();
@@ -41,16 +50,12 @@ public class QuizController {
 
 
     /**
-     * Speichert eine neue Antwort eines Spielers in der Datenbank ab.
+     * Speichert eine neue Antwort eines Spielers in der Datenbank ab
+     * @param
+     * @retun
      */
-    @PostMapping("/answers")
-    public Answer submitAnswer(@RequestBody Answer answer) {
-        return answerRepository.save(answer);
-    }
 
-    /**
-     * Erstellt eine neue Frage (z.B. für einen Admin-Bereich).
-     */
+
     @GetMapping("/questions/{questionId}/answers")
     public ResponseEntity<List<Answer>> getAnswersByQuestionId(@PathVariable Integer questionId) {
         List<Answer> answers = answerRepository.findAll().stream()

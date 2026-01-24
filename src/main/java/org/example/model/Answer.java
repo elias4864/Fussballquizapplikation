@@ -1,6 +1,7 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 
@@ -9,7 +10,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor // Erstellt Konstruktor für alle Felder
 public class Answer {
 
-
+    /**
+     * @param id
+     * @return id
+     *Automatisch
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,18 +27,19 @@ public class Answer {
     private Question question;
 
 
-    @OneToOne
-    @JoinColumn(name = "category_id") // Dies erzeugt die Spalte category_id in der Tabelle answer
-    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonBackReference(value = "category-answer")
     private Category category;
+
 
     @ManyToOne
     @JoinColumn(name = "player_id")
-    @JsonBackReference // Korrekt: Player ist "Elternteil"
+    @JsonBackReference// WICHTIG: Verhindert, dass die Antwort den Spieler erneut lädt
     private Player player;
 
     @ManyToOne
-    @JoinColumn(name = "team_id") // Verweist auf team(id) in der DB
+    @JoinColumn(name = "team_id")
     private Team team;
 
 

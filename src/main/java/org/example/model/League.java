@@ -1,8 +1,10 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +20,17 @@ public class League {
 
     @OneToMany(mappedBy = "league")
     @JsonManagedReference // Zeigt die Liste der Teams an, wenn eine Liga geladen wird
-    private List<Team> teams;
+    private List<Team> teams = new ArrayList<>();
+
+    @OneToMany(mappedBy = "league")
+    @JsonManagedReference
+    private List<Question> questions = new ArrayList<>();
+
+
+
+    @OneToMany(mappedBy = "league")
+    @JsonManagedReference
+    private  List<Answer> answers = new ArrayList<>();
 
     public League(){
 

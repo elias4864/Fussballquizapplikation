@@ -25,15 +25,22 @@ public class CategoryService {
         return repository.findById(id).orElse(null);
     }
 
-    public Category saveCategory(Category category) {
+    public Category addCategory(Category category) {
         return repository.save(category);
     }
+
+    public void deleteCategoryById(Integer id) {
+        if (repository.existsById(id)) {repository.deleteById(id);
+        } else {
+            throw new RuntimeException("Kategorie mit ID " + id + " nicht gefunden.");
+        }
+    }
+
+
 
     public void deleteCategory(Integer id) {
         repository.deleteById(id);
     }
-
-
 
 
 

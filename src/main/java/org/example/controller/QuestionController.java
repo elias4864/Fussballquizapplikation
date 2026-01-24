@@ -7,6 +7,7 @@ import org.example.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,46 +19,60 @@ import java.util.List;
 public class QuestionController {
 
 
+    /**
+     * ALle für die COntroller benötigten Methoden der Question Liste und Abhängigkeiten werden initialisiert
+     */
+    private final QuestionRepository questionRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
 
+    /**
+     * KOnstruktor der Questioncontroller Klasse mit Dependency Injeciton zum Repository
+     * @param questionRepository
+     */
     public QuestionController(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
 
-    // GET: Alle Fragen abrufen
+    /**
+     * Alle Fragen der Questions Liste abfragen aus Datenbank
+     *
+     * @return List Question
+     */
+
     @GetMapping("/allquestions")
     public List<Question> getAllQuestions() {
         return questionRepository.findAll();
     }
 
+
+
+
     /**
-     * Bestimmte Frage nach  ID abfragen
+     * Filtert aus der Question Liste  anhand der  von JPA vordefinierten Methode getQuestionsById  mit einer bestimmten Id anhand des Primarykeys id mit Typ Integer
      *
-     * @return
+     * @param id
+     * @return Neue Liste Question welche anhand von zugehörigen id zurückgegeben wird
      */
     @GetMapping("/{id}")
-    public Question getQuestionById(@PathVariable Integer id) {
-        // Jetzt ist questionRepository nicht mehr null
-        return questionRepository.findById(id).orElse(null);
+    public ResponseEntity<Question> getQuestionById(@PathVariable Integer id) {
+        return questionRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
-
-    @PutMapping("/add")
-    public Question addQuestion(@RequestBody Question question) {
-        return questionRepository.save(question);
-    }
-
 
     /**
-     * Neue Fragen hinzufügen
+     * Neue Frage wird zur Questions Liste hinzugefügt
+     * @param question
+     * @return
      */
 
 
 
+
     /**
      *
-     *
+     * @param  id
+     * @return
      */
     @DeleteMapping("/delete/{id}")
     public void deleteQuestion(@PathVariable Integer id) {
@@ -65,12 +80,11 @@ public class QuestionController {
         questionRepository.deleteById(id);
     }
 
-    @PostMapping
-    public Question createQuestion(@RequestBody Question question) {
-        return questionRepository.save(question);
+
+    @GetMapping("/quiz")
+    public List<Question> getQuiz(@RequestParam(defaultValue = "10") int size) {
+        return questionRepository.findRandomQuestions(size);
     }
-
-
 
 
 

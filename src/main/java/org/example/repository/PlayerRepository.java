@@ -5,12 +5,35 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+
+/**
+ * JPA Dependency Player repository erbt vom JPA Repository  für Datenbankzugriff  zu Player Liste zu Entität Player durch Constraint mit  dem Primary Key Integer
+ */
 public interface PlayerRepository extends JpaRepository<Player,Integer> {
-    List<Player> findByIsactiveTrue();
 
-    // alle inaktiven Spieler
-    List<Player> findByIsactiveFalse();
+    /**
+     * Alle SPieler mit  von JPA vorderfinierten Methode findByStats anhand des Atributs stats die Torbilanz eine SPielers anzeigt  mit dem
+     * @param stats
+     * @return List Player mit bestimmter Torbilanz
+     */
+    List<Player> findByStats(String stats);
+
+    /**
+     * Alle Aktiven  Datnsätze der  Spieler Liste  werden durch das Attribut isactive  üebr ihre SPieleraktivität geprüft  werden und eien neue Liste  welche im Parameter boolean true steht
+     * @param isactive
+     * @return List Player mit bestimmter Nationalität
+     */
+
+    List<Player> findByisactive(boolean isactive);
+
+    /**
+     * Alle SPieler Datensätze anhand des Attributs mit einer bestimmten  Nationalität  werden  mit einem bestimmten Attribut nationality   ausgegeben werden
+     * @param nationality
+     * @return Lislt PLayer
+     */
+
+
+
     List<Player> findByNationality(String nationality);
-
 
 }
