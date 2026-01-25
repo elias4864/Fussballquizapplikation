@@ -27,11 +27,17 @@ public interface PlayerRepository extends JpaRepository<Player,Integer> {
     List<Player> findByisactive(boolean isactive);
 
     /**
+     * Ein bestimmter Spieler wird anhan des  Vornamens abefragt
+     * @param firstName
+     * @return List Player
+     */
+
+    List<Player> findByFirstName(String firstName);
+    /**
      * Alle SPieler Datensätze anhand des Attributs mit einer bestimmten  Nationalität  werden  mit einem bestimmten Attribut nationality   ausgegeben werden
      * @param nationality
      * @return Lislt PLayer
      */
-
 
 
     List<Player> findByNationality(String nationality);

@@ -33,8 +33,21 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonBackReference(value ="category-questions" )
+    @JsonBackReference
     private Category category;
+
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    @JsonBackReference
+    private Team team;
+    /**
+     * Jeder SPieler wird eine
+     */
+
+
+
+
     // <--- Dieser Name muss mit 'mappedBy' übereinstimmen!
 
     @OneToOne(mappedBy = "question")
@@ -47,22 +60,25 @@ public class Question {
     @JsonBackReference
     private League league;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @JsonManagedReference(value="question-answer")
+    @OneToMany(mappedBy = "question")
+    @JsonManagedReference
     private List<Answer> answers = new ArrayList<>();
 
-    public enum Difficulty {leicht, mittel, schwer}
+    public enum Difficulty {leicht, mittel, schwer};
 
-    ;
+
+
+
+
+
 
     // Standard-Konstruktor (für JPA)
     public Question() {
     }
 
-    ;
 
     // Konstruktor für deine Logik mit Attributen
-    public Question(String question, String correctAnswer, String wrong_answer1, String wrong_answer2, String wrong_answer3, Difficulty difficulty, Category category) {
+    public Question(String question, String correctAnswer, String wrong_answer1, String wrong_answer2, String wrong_answer3, Difficulty difficulty, Category category, Team team,List<Answer> answers,Player player) {
         this.question = question;
         this.correctAnswer = correctAnswer;
         this.wrong_answer1 = wrong_answer1;
@@ -70,6 +86,13 @@ public class Question {
         this.wrong_answer3 = wrong_answer3;
         this.difficulty = difficulty; // Jetzt korrekt vom Typ Difficulty
         this.category = category;
+        this.team = team;
+        this.player = player;
+        this.answers = answers;
+    }
+
+    public Question(Team team) {
+        this.team = team;
     }
 
     public Integer getId() {
@@ -78,6 +101,14 @@ public class Question {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public String getQuestion() {

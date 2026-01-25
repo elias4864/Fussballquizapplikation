@@ -6,9 +6,17 @@ import org.example.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+
+/**
+ * Service Anniotatu damit Spring Boot die Service Klasse erkennt
+ */
 @Service
 public class TeamService {
 
+
+    /**
+     * Depdeny Incetions zur Repostiroy und League Repository KLasse welche
+     */
 
     private final TeamRepository teamRepository;
     private final LeagueRepository leagueRepository;
@@ -17,6 +25,8 @@ public class TeamService {
         this.teamRepository = teamRepository;
         this.leagueRepository = leagueRepository;
     }
+
+
 
     public Team getTeam(Integer id) {
         return teamRepository.findById(id).orElse(null);

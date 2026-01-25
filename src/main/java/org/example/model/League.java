@@ -22,6 +22,10 @@ public class League {
     @JsonManagedReference // Zeigt die Liste der Teams an, wenn eine Liga geladen wird
     private List<Team> teams = new ArrayList<>();
 
+
+    /**
+     * Alle Ligen
+     */
     @OneToMany(mappedBy = "league")
     @JsonManagedReference
     private List<Question> questions = new ArrayList<>();

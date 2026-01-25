@@ -7,9 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+/**
+ *  spezielle Annotation damit Spring weiss dass es  bei dieser Klasse tatsächlich um Service handelt
+ */
 @Service
 
 public class CategoryService {
+
+    /**
+     * Category klasse mit Dependency Injetion zum Categoryrepository mit allen bentötigten Methoden  für Category Controller  damit HTTp Requests Daten zuerste an Repository vor dem Service sendet.
+     *
+     */
 
     private final CategoryRepository repository;
 
@@ -28,7 +36,11 @@ public class CategoryService {
     public Category addCategory(Category category) {
         return repository.save(category);
     }
-
+    /**
+     * Methode welche  anhand der Methode  deleteCategoryBId mit dem PrimaryKey der Category als Parameter löscht
+     * Die HTTP Anfrage wrid von Servie an das Repository weitergebgen und mit einer IF/Else Scheleife überprüft ob diese ID existiert, falls sie nicht existier erhötl man die Nahrich im Respone das die Kategory nicht gefunden werden kan duerh eine Exception Message
+     * @param id
+     */
     public void deleteCategoryById(Integer id) {
         if (repository.existsById(id)) {repository.deleteById(id);
         } else {

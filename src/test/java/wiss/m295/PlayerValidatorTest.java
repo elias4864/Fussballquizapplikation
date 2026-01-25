@@ -54,10 +54,9 @@ public class PlayerValidatorTest
         p.setTeam(t);
         t.setLeague(l);
 
+
         when(playerRepo.findById(1)).thenReturn(Optional.of(p));
         when(playerRepo.findById(10)).thenReturn(Optional.of(p));
-        when(teamRepo.findById(100)).thenReturn(Optional.of(t));
-        when(leagueRepo.findById("CL")).thenReturn(Optional.of(l));
 
         assertDoesNotThrow(() -> validator.validatePlayer(1));
         assertDoesNotThrow(()->validator.validatePlayer(10));
@@ -87,6 +86,7 @@ public class PlayerValidatorTest
 
         assertThrows(ValidationException.class, () -> validator.validatePlayer(1));
         assertThrows(ValidationException.class, ()->validator.validatePlayer(10));
+
     }
 
     @Test

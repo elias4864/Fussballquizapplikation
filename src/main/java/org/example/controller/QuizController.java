@@ -41,26 +41,23 @@ public class QuizController {
      *
      * */
 
-    @GetMapping("/questions")
-    public List<Question> getAllQuestions() {
-        return questionRepository.findAll();
-    }
-
 
 
 
     /**
-     * Speichert eine neue Antwort eines Spielers in der Datenbank ab
-     * @param
-     * @retun
+     * Speichert eine neue Antwort eines Spielers in der Datenbank anhand des Attributs quetsstio
+     * @param questionId
+     * @return List Answe gibt gefilterte Fragen welche dies Id entsprechen zurück und fügt sie zu einer neuen Liste hinzu
      */
 
 
-    @GetMapping("/questions/{questionId}/answers")
+    @GetMapping("/questions/answers/{questionId}")
     public ResponseEntity<List<Answer>> getAnswersByQuestionId(@PathVariable Integer questionId) {
         List<Answer> answers = answerRepository.findAll().stream()
                 .filter(a -> a.getQuestion() != null && a.getQuestion().getId().equals(questionId))
                 .toList();
         return ResponseEntity.ok(answers);
     }
+
+
 }

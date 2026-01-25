@@ -6,9 +6,16 @@ import org.example.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/**
+ * Servie Klawse für die Gechäftslogik mit Servic ANnotation welche SPring darafu hinweis das es eien Srevice KLasse handelt
+ */
 @Service
 
 public class QuestionService {
+
+    /**Geschäftslogik welche die Verwaltun der Fragen  mit dne HTPT Requeste zuerst zur Repository SHcihts schickt welche die Methodn ausführt und danch zu der Servif welh die Daten auruft und die Methdo verknüpft  udn dann endgültig an den Question Cotnroller weiterschikt und dann an den Webserver der sie in JSOn FOrmat umwandelt
+     * Dependency Injection der Question Repository  welche alle Methoden für die Frageliste welche zum QuestionCOntroller gehört initailisiert aufruft
+     */
 
     private final QuestionRepository questionRepository;
 

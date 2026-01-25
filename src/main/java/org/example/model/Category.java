@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repräsentiert eine Quiz-Kategorie (z. B. Nationalität, Verein).
+ * Verwaltet die bidirektionalen Beziehungen zu Fragen und Antworten
+ * mittels Jackson-Referenzen zur Vermeidung von Rekursionen.
+ * Mit At Tbael erstltl einen Tabelle Category
+ */
 @Entity
 @Table(name = "category")
 public class Category {
@@ -45,13 +51,11 @@ public class Category {
     private String nationality;
 
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference(value = "category-answer")
+    @JsonManagedReference // "Managed" bedeutet: Zeig mir die Antworten
     private List<Answer> answers = new ArrayList<>();
 
-
-
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference(value = "category-question")
+    @JsonManagedReference// "Managed" bedeutet: Zeig mir die Fragen
     private List<Question> questions = new ArrayList<>();
 
 
@@ -62,7 +66,8 @@ public class Category {
     }
 
 
-    public Category(String name, String team, String position, String nationality) {
+    public Category( Integer id, String name, String team, String position, String nationality) {
+        this.id = id;
         this.name = name;
         this.team = team;
         this.position = position;

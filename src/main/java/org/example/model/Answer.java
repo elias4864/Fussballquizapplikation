@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "answer")
-@AllArgsConstructor // Erstellt Konstruktor für alle Felder
 public class Answer {
 
     /**
@@ -21,6 +20,8 @@ public class Answer {
 
 
 
+
+
     @ManyToOne
     @JoinColumn(name = "question_id")
     @JsonBackReference
@@ -29,13 +30,14 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonBackReference(value = "category-answer")
+    @JsonBackReference
     private Category category;
+
 
 
     @ManyToOne
     @JoinColumn(name = "player_id")
-    @JsonBackReference// WICHTIG: Verhindert, dass die Antwort den Spieler erneut lädt
+    @JsonBackReference
     private Player player;
 
     @ManyToOne
@@ -45,19 +47,22 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "league_id",columnDefinition = "VARCHAR(10)")
+
     private League league;
 
 
     // Standard-Konstruktor
     public Answer() {
+
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
+    public Answer(Integer id, Question  question,Category category,Player player, Team team, League league) {
+        this.id = id;
+        this.question = question;
+        this.category = category;
         this.player = player;
+        this.team = team;
+        this.league = league;
     }
 
     public Integer getId() {
@@ -83,6 +88,13 @@ public class Answer {
     public void setCategory(Category category) {
         this.category = category;
     }
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     public Team getTeam() {
         return team;
@@ -90,6 +102,14 @@ public class Answer {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
     }
 }
 

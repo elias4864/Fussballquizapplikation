@@ -7,13 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Wichtige SpringBootApplication Annotation welche einnalig in der Runnable Main Klasse verwendet wird und als Startpunkkt der APplikation dient
+ */
 @SpringBootApplication
 @RestController
 @RequestMapping("/test/api")
 public class Fussballapplikation {
 
     /**
-     *  Runnable Main Applikation
+     *  Runnable Main Applikation im Root Example  üebr allen Packages Controller, Serc und Repository liegt
      *
      *
      */

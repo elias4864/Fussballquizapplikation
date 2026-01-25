@@ -7,6 +7,11 @@ import java.util.List;
 
 @Service
 public class LeagueService  {
+
+    /**
+     * Leagueverwalting
+     * Dependency Injection zu League Repository  alle benötigten  Methoden welche für den League Controller werden initalisiert
+     */
     private final LeagueRepository leagueRepository;
 
     public LeagueService(LeagueRepository leagueRepository) {

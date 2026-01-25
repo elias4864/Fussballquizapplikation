@@ -21,7 +21,7 @@ public class Player {
 
 
     /**
-     * Id automatisch generierte
+     * ANnotaiton Generated Value markiert Id als Proary keys  für die HTTP Request Abfrage im PlayerCOntroller
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,34 +60,35 @@ public class Player {
 
 
 
-
     @ManyToOne
     @JoinColumn(name = "team_id")
-    @JsonBackReference
+    @JsonBackReference(value = "team-player")
     private Team team;
 
     /**
      * Managed Reference der Player Tabelle und Antowrten Liste
      */
 
+    /**
+     * Die Frage, die sich direkt auf diesen Spieler bezieht (1:1).
+     */
 
-    @OneToOne
+ ;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "question_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Question question;
 
-    @OneToMany(mappedBy = "player")
-    @JsonManagedReference
-    private List<Answer> answers = new ArrayList<>();
-
-
-
-
-
-
     /**
-     * Nationalität
+     * Managed Reference der Player Tabelle und Antowrten Liste
      */
+
+
+
+
+
+
+
     @Column(name="nationality")
     private String nationality;
 
@@ -96,9 +97,7 @@ public class Player {
     private String stats;
 
 
-    /**
-     *Attribute iactive mit boolean überprufen ob Aussage wahr oder falsch ist.
-     */
+
 
     private boolean isactive;
 
@@ -108,11 +107,13 @@ public class Player {
     }
 
     /**
-     * Leerer Konstruktor
+     * Leerer Konstruktor Playdsr bei zu vielen Attributen
      */
 
     public Player() {
     }
+
+
     public Player(Integer id,String firstName,String lastName,Integer birthYear,Position position,String nationality, Team team, String stats, boolean isactive) {
         this.id = id;
         this.firstName = firstName;
@@ -125,8 +126,15 @@ public class Player {
         this.isactive=isactive;
     }
 
+
+
     public Integer getId() {
         return id;
+    }
+
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Question getQuestion() {
@@ -137,17 +145,7 @@ public class Player {
         this.question = question;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
 
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;

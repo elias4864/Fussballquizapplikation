@@ -28,8 +28,9 @@ public class CategoryController {
             //Alle Antworten  der Liste
 
     /**
-     *
+     *Alle Kategorien mit allen Ressourcen der Datenbank werden in einer Liste zurückgegeben
 
+     @return Category List
      */
     @GetMapping("/all")
     public List<Category> getAll() {
@@ -49,13 +50,13 @@ ebr den Primary Key Id der Kategorie angezeigt wird     */
 
     /**
      * DIe Kategorie wird anhand der ID eins bestimmten Spielers zugeordnet inklsuvie der Fragen un der restliche Informationen
-     * @param playerId
+     * @param id
      * @return Integer
      */
 
-    @GetMapping("/player/{playerid}")
-    public Category getCategoryByPlayerId(@PathVariable Integer playerId) {
-        return service.getCategoryById(playerId);
+    @GetMapping("/player/{id}")
+    public Category getCategoryByPlayerId(@PathVariable Integer id) {
+        return service.getCategoryById(id);
     }
 
 
@@ -71,11 +72,22 @@ ebr den Primary Key Id der Kategorie angezeigt wird     */
     }
 
 
+
+
+
+    /**
+     * Löscht eine Kategorie anhand ihrer ID.
+     * @param id Die ID der zu löschenden Kategorie.
+     */
+
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable Integer id) {
         service.deleteCategoryById(id);
-        return ResponseEntity.ok("Die Kategorie mit der ID " + id + " wurde aus der Kategorienliste entfernt.");
+        return ResponseEntity.ok("Die Kategorie mit der ID " + id + " wurde aus der Kategorienliste entfernt");
     }
+
+
 
 }
 

@@ -3,6 +3,8 @@ package org.example.controller;
 import org.example.model.Player;
 import org.example.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -42,6 +44,18 @@ public class PlayerController {
         return playerService.getActivePlayers();
     }
 
+
+    /**
+     * Ein SPieler anhand des Priamry Keys id wird aufgerfut und  sien Spielerinfromtioen werden angezeigt
+     * @param id
+     * @return Player mit bestimmter Id
+     */
+    @GetMapping("/player/{id}")
+    public Player getPlayerById(@PathVariable int id) {
+        // Ruft den Service auf, der das Repository nutzt
+        return playerService.getPlayer(id);
+    }
+
     /**
      * Ruft alle inaktiven Spieler ab.
      * @
@@ -57,14 +71,23 @@ public class PlayerController {
      * @param player Das Spieler-Objekt, das im Request-Body gesendet wird
      * @return der gespeicherte Player inklusiver generierter ID
      */
+    /**
+     * Erstellt einen neuen Spieler-Datensatz.
+     */
     @PostMapping("/add")
-    public Player createPlayer(@RequestBody Player player) {
-        // Tipp: In Postman muss hier ein JSON im Body sein!
-        return playerService.addPlayer(player);
+    public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
+        Player savedPlayer = playerService.addPlayer(player);
+        return new ResponseEntity<>(savedPlayer, HttpStatus.CREATED);
     }
 
 
 
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Player> updatePlayer(@PathVariable Integer id, @RequestBody Player playerDetails) {
+        Player updatedPlayer = playerService.updatePlayer(id, playerDetails);
+        return ResponseEntity.ok(updatedPlayer);
+    }
     /**
      * Sucht Spieler basierend auf ihrer Nationalität.
      * @param nationality Die Nationalität als Pfad-Variable (z.B. /nationality/German).
@@ -78,7 +101,7 @@ public class PlayerController {
     /**
      * Sucht Spieler basierend auf einem Statistik-Kriterium.
      * @param stats Das Statistik-Kriterium als Pfad-Variable.
-     * @return Eine Liste von Spielern, die das Kriterium erfüllen.
+     * @return List Player Eine Liste von Spielern, die das Kriterium erfüllen.
      */
     @GetMapping("/stats/{stats}")
     public List<Player> getPlayersByStats(@PathVariable String stats) {
@@ -86,24 +109,14 @@ public class PlayerController {
     }
 
     /**
-     * Ein vorhandener SPieler wird
-     * @param id
-     * @param playerDetails
-     * @return
+     * Ein Spieler mit einem bestimen VOrnamen wir anhand der PathVariabel firstName entfernt
+     * @param firstName
+     * @return Player
      */
-    @PutMapping("/update/{id}")
-    public Player updatePlayer(@PathVariable Integer id, @RequestBody Player playerDetails) {
-        // Aktualisiert den Spieler mit der ID {id}
-        return playerService.updatePlayer(id, playerDetails);
-    }
-
-    // --- DELETE: Eine Kategorie löschen ---
-    // Hinweis: Normalerweise in einem CategoryController, hier als Beispiel:
-    @DeleteMapping("/category/{id}")
-    public String deleteCategory(@PathVariable Integer id) {
-        // Hier rufen wir den Service auf, um die Kategorie zu entfernen
-        playerService.deleteCategory(id);
-        return "Kategorie " + id + " wurde erfolgreich gelöscht.";
+    @DeleteMapping("/delete/name/{firstName}")
+    public ResponseEntity<String> deletePlayer(@PathVariable String firstName) {
+        playerService.deletePlayer(firstName);
+        return ResponseEntity.ok("Der Spieler mit dem Vornamen " + firstName + " wurde gelöscht.");
     }
 }
 

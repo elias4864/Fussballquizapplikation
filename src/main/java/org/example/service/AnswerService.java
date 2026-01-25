@@ -35,6 +35,10 @@ public class AnswerService {
     }
 
 
+    public Answer getAnswerById(Integer id) {
+        return answerRepository.findById(id).orElse(null);
+    }
+
 
     public Answer addAnswer(Answer a) {
         return answerRepository.save(a);

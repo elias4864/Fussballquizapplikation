@@ -12,12 +12,25 @@ import java.util.List;
 public class PlayerService {
 
 
+    /**     * Verknüpfung des Playie mit Repository bei  HTTP Datenüebrmittlugn zuerst an repostiryo udn dan weiter an Service der Daten verabreti udn COntroler ausführt
+
+     * Dependency Injcetion zu Player Repository mit allen für den PlayerController  initialisierten  Methoden
+     */
     private final PlayerRepository playerRepository;
+
+
+    /** PlayerService Konsturktor mit playerrepostiory Referenzierung
+     * @param playerRepository
+     */
 
     public PlayerService(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
     }
 
+    /**
+     * Methode für CategoryCOntrolerl wird mit eirn SHleife erstlt die im Repostory überpfüt ob  mit der existsByID eine ID bereits existiert fall ja di evorderinierte deletbyId Methdo  welch anhan der Id eine Player löscht verwendet
+     * @param id
+     */
     public void deleteCategory(Integer id) {
         // Überprüfen, ob die Kategorie existiert, bevor man löscht
         if (playerRepository.existsById(id)) {
@@ -26,27 +39,37 @@ public class PlayerService {
     }
 
 
+    /**
+     * Ein Spieler wirde aktualisiert und die Attribute FIrstName, LastName , BirthYear, Nationality. Stats, IsActive, Position werden  geändert und überprüft sowie in Repository gespeichert , Falls ein Spiler nicht  anhand der Id gefunden wrid eine neue ID erstellt
+     * @param id
+     * @param details
+     * @return
+     */
 
-    public Player updatePlayer(Integer id, Player player) {
+    public Player updatePlayer(Integer id, Player details) {
         return playerRepository.findById(id)
-                .map(p -> {
-                    player.setFirstName(player.getFirstName());
-                    player.setLastName(player.getLastName());
-                    player.setBirthYear(player.getBirthYear());
-                    player.setPosition(player.getPosition());
-                    player.setNationality(player.getNationality());
-                    player.setStats(player.getStats());
-                    player.setIsactive(player.isIsactive());
-                    player.setTeam(player.getTeam());
-                    // Wichtig: Falls Fragen verknüpft sind, hier ebenfalls setzen
-                    return playerRepository.save(player);
+                .map(existingPlayer -> {
+                    // Felder aktualisieren
+                    existingPlayer.setFirstName(details.getFirstName());
+                    existingPlayer.setLastName(details.getLastName());
+                    existingPlayer.setBirthYear(details.getBirthYear());
+                    existingPlayer.setNationality(details.getNationality());
+                    existingPlayer.setStats(details.getStats());
+                    existingPlayer.setIsactive(details.isIsactive());
+                    existingPlayer.setPosition(details.getPosition());
+
+                     if (details.getTeam() != null) {
+                        existingPlayer.setTeam(details.getTeam());
+                    }
+
+                    return playerRepository.save(existingPlayer);
                 })
                 .orElseGet(() -> {
-                    player.setId(id);
-                    return playerRepository.save(player);
+                    // Wenn nicht gefunden, unter der ID neu anlegen
+                    details.setId(id);
+                    return playerRepository.save(details);
                 });
     }
-
 
 
     public List<Player> getAllPlayers() {
@@ -80,6 +103,9 @@ public class PlayerService {
         return playerRepository.findByisactive(false);
     }
 
+    public List<Player> deletePlayer(String  firstName){
+        return playerRepository.findByFirstName(firstName);
+    }
 
 
 }
