@@ -5,6 +5,9 @@ import org.example.repository.AnswerRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/**
+ * The type Answer service.
+ */
 @Service
 public class AnswerService {
 
@@ -17,14 +20,30 @@ public class AnswerService {
 
     private final AnswerRepository answerRepository;
 
+    /**
+     * Instantiates a new Answer service.
+     *
+     * @param answerRepository the answer repository
+     */
     public AnswerService(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
     }
 
+    /**
+     * Gets all answers.
+     *
+     * @return the all answers
+     */
     public List<Answer> getAllAnswers() {
         return answerRepository.findAll();
     }
 
+    /**
+     * Gets answers for question.
+     *
+     * @param questionId the question id
+     * @return the answers for question
+     */
     public List<Answer> getAnswersForQuestion(int questionId) {
         return answerRepository.findAll()
                 .stream()
@@ -35,15 +54,32 @@ public class AnswerService {
     }
 
 
+    /**
+     * Gets answer by id.
+     *
+     * @param id the id
+     * @return the answer by id
+     */
     public Answer getAnswerById(Integer id) {
         return answerRepository.findById(id).orElse(null);
     }
 
 
+    /**
+     * Add answer answer.
+     *
+     * @param a the a
+     * @return the answer
+     */
     public Answer addAnswer(Answer a) {
         return answerRepository.save(a);
     }
 
+    /**
+     * Delete answer.
+     *
+     * @param id the id
+     */
     public void deleteAnswer(int id) {
         answerRepository.deleteById(id);
     }

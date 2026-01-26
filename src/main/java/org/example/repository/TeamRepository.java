@@ -8,30 +8,34 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * The interface Team repository.
+ */
 public interface TeamRepository extends JpaRepository<Team,Integer> {
 
     /**
      * Findet alle Teams mit einer bestimmten Liga-Entitiät
-     * @param league
+     *
+     * @param league the league
      * @return Bestimmte Liste von Teams in einer Liga
      */
     List<Team> findByLeague(League league);
 
+
     /**
-     *Ein Team wird anahnd des Atributs leagueName also einer zugehörigen Liga ausgelesen wird
-     * @param leagueName
-     * @return  Neue Liste names Team aller Fussballteams welcher zu einer anhand der Paramteres leagueName zugehröigen Liga angehören wird  zurückgegeben
+     * Ein Team wird anahnd des Atributs leagueName also einer zugehörigen Liga ausgelesen wird
+     *
+     * @param leagueName the league name
+     * @return Neue Liste names Team aller Fussballteams welcher zu einer anhand der Paramteres leagueName zugehröigen Liga angehören wird  zurückgegeben
      */
-
-
     List<Team> findByLeagueName(@Param("leagueName") String leagueName);
+
 
     /**
      * Eine Liste eines Teams welcher zu der Id einer bestimmten Liga gehören wird durch den leagueid ausgelesen
-     * @param leagueId
+     *
+     * @param leagueId the league id
      * @return Eine Liste von Teams, die zu einer Liga-ID gehören
      */
-
-
     List<Team> findByLeagueId(@Param("leagueId") String leagueId);
 }

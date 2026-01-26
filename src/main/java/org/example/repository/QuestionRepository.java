@@ -7,6 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * The interface Question repository.
+ */
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
 
@@ -18,9 +21,10 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
      * @param amount Die maximale Anzahl der zufällig auszuwählenden Fragen.
      * @return Eine Liste von zufällig ausgewählten {@link Question}-Objekten.
      */
-
     @Query(value = "SELECT * FROM question ORDER BY RAND() LIMIT :amount", nativeQuery = true)
     List<Question> findRandomQuestions(@Param("amount") int amount);
+
+
 
 }
 

@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+/**
+ * The type Player controller.
+ */
 @RestController
 @RequestMapping("/players")
 public class PlayerController {
@@ -20,6 +23,7 @@ public class PlayerController {
 
     /**
      * Konstruktor für Dependency Injection.
+     *
      * @param playerService Der Service für die Spieler-Logik.
      */
     public PlayerController(PlayerService playerService) {
@@ -28,6 +32,7 @@ public class PlayerController {
 
     /**
      * Ruft eine Liste aller registrierten Spieler ab.
+     *
      * @return Liste aller Spieler.
      */
     @GetMapping("/all")
@@ -37,6 +42,7 @@ public class PlayerController {
 
     /**
      * Ruft alle derzeit aktiven Spieler ab.
+     *
      * @return Liste aktiver Spieler.
      */
     @GetMapping("/active")
@@ -47,7 +53,8 @@ public class PlayerController {
 
     /**
      * Ein SPieler anhand des Priamry Keys id wird aufgerfut und  sien Spielerinfromtioen werden angezeigt
-     * @param id
+     *
+     * @param id the id
      * @return Player mit bestimmter Id
      */
     @GetMapping("/player/{id}")
@@ -58,8 +65,8 @@ public class PlayerController {
 
     /**
      * Ruft alle inaktiven Spieler ab.
-     * @
-     * @return  Eine neue Liste Player inaktiver Spieler werden angeigt die die Statusaktivität "inaktiv" haben
+     *
+     * @return Eine neue Liste Player inaktiver Spieler werden angeigt die die Statusaktivität "inaktiv" haben @
      */
     @GetMapping("/inactive")
     public List<Player> getInactivePlayers() {
@@ -67,29 +74,42 @@ public class PlayerController {
     }
 
     /**
-     * Erstellt einen neuen Spieler-Datensatz.
+     * Erstellt einen neuen Spieler-Datensatz
      * @param player Das Spieler-Objekt, das im Request-Body gesendet wird
      * @return der gespeicherte Player inklusiver generierter ID
      */
     /**
      * Erstellt einen neuen Spieler-Datensatz.
+     *
+     * @param player the player
+     * @return the response entity
      */
-    @PostMapping("/add")
+    @PostMapping("/add") // Entferne das /{player}
     public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
         Player savedPlayer = playerService.addPlayer(player);
         return new ResponseEntity<>(savedPlayer, HttpStatus.CREATED);
     }
 
 
-
-
+    /**
+     * Update player response entity.
+     *
+     * @param id            the id
+     * @param playerDetails the player details
+     * @return the response entity
+     */
     @PutMapping("/update/{id}")
     public ResponseEntity<Player> updatePlayer(@PathVariable Integer id, @RequestBody Player playerDetails) {
+        // Der Service erledigt die Arbeit
         Player updatedPlayer = playerService.updatePlayer(id, playerDetails);
+
+        // Wir geben den aktualisierten Spieler zurück
         return ResponseEntity.ok(updatedPlayer);
     }
+
     /**
      * Sucht Spieler basierend auf ihrer Nationalität.
+     *
      * @param nationality Die Nationalität als Pfad-Variable (z.B. /nationality/German).
      * @return Eine Liste von Spielern der entsprechenden Nationalität.
      */
@@ -100,6 +120,7 @@ public class PlayerController {
 
     /**
      * Sucht Spieler basierend auf einem Statistik-Kriterium.
+     *
      * @param stats Das Statistik-Kriterium als Pfad-Variable.
      * @return List Player Eine Liste von Spielern, die das Kriterium erfüllen.
      */
@@ -110,7 +131,8 @@ public class PlayerController {
 
     /**
      * Ein Spieler mit einem bestimen VOrnamen wir anhand der PathVariabel firstName entfernt
-     * @param firstName
+     *
+     * @param firstName the first name
      * @return Player
      */
     @DeleteMapping("/delete/name/{firstName}")

@@ -9,6 +9,9 @@ import java.util.List;
 
 import static java.util.Arrays.stream;
 
+/**
+ * The type Answer controller.
+ */
 @RestController
 @RequestMapping("/answers")
 public class AnswerController {
@@ -21,13 +24,20 @@ public class AnswerController {
 
     /**
      * Konstruktor mit Dependency Injections für Verknüpfung von Repository und Service Komponenten
+     *
+     * @param answerService the answer service
      */
     public AnswerController(AnswerService answerService) {
         this.answerService = answerService;
     }
 
 
-
+    /**
+     * Zu einer Antowrten liste erhält man  bestimmte Answeroptionen welche mit dem  Parameter Integer  und questionId übergeben werden mit einem Stram der alle Fragen ewlche eienr Id entsprehcen abfragt
+     *
+     * @param questionId the question id
+     * @return List Answer
+     */
     @GetMapping("/question/options/{questionId}")
     public List<Answer> getAnswerOptions(@PathVariable Integer questionId) {
         // Wir holen alle Antworten vom Service und filtern sie
@@ -42,17 +52,12 @@ public class AnswerController {
      * @return Alle Datensätze welche eine zugehörigen Frage anhand der Id angehören werden durch mit einem Stream gefiltert und mit eien Lamda Expression abefragt ob sie eine bestimtem Id entsprechen und dann zu einer neuen Liste hinzugefügt
      */
 
-    @GetMapping("/question/{id}")
-    public List<Answer> getAnswersByQuestion(@PathVariable Integer id) {
-        // Die Liste enthält automatisch 1 korrekte und 3 falsche Antworten
-        return answerService.getAnswersForQuestion(id);
-    }
 
     /**
      * ALle möglichen Antworten der Datenbank werden mit der Meethoden von JPA vordefinierten Methdoe findALl ausgegeben
+     *
      * @return List Answer mit allen Antworten
      */
-
     @GetMapping("/allanswers")
     public List<Answer> getAllAnswers() {
         return answerService.getAllAnswers();
@@ -65,14 +70,6 @@ public class AnswerController {
      * @return Das Team-Objekt, zu dem die Antwort gehört
      */
 
-    @GetMapping("/team/{answerId}")
-    public Team getTeamByAnswerId(@PathVariable Integer answerId) {
-        Answer answer = answerService.getAnswerById(answerId);
-        if (answer != null && answer.getTeam() != null) {
-            return answer.getTeam();
-        }
-        return null;
-    }
 
 
 

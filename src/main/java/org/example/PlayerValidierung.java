@@ -11,6 +11,10 @@ import org.example.repository.QuestionRepository;
 import org.example.repository.TeamRepository;
 import org.example.repository.LeagueRepository;
 import org.springframework.stereotype.Component;
+
+/**
+ * The type Player validierung.
+ */
 @Component
 public class PlayerValidierung {
 
@@ -19,6 +23,13 @@ public class PlayerValidierung {
     private final TeamRepository teamRepository;
     private final LeagueRepository leagueRepository;
 
+    /**
+     * Instantiates a new Player validierung.
+     *
+     * @param playerRepository the player repository
+     * @param teamRepository   the team repository
+     * @param leagueRepository the league repository
+     */
     public PlayerValidierung(PlayerRepository playerRepository,
                              TeamRepository teamRepository,
                              LeagueRepository leagueRepository) {
@@ -27,6 +38,11 @@ public class PlayerValidierung {
         this.leagueRepository = leagueRepository;
     }
 
+    /**
+     * Validate player.
+     *
+     * @param playerId the player id
+     */
     public void validatePlayer(int playerId) {
 
         Player player = playerRepository.findById(playerId)

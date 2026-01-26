@@ -59,13 +59,23 @@ public class Category {
     private List<Question> questions = new ArrayList<>();
 
 
-
-
+    /**
+     * Instantiates a new Category.
+     */
     public Category(){
 
     }
 
 
+    /**
+     * Instantiates a new Category.
+     *
+     * @param id          the id
+     * @param name        the name
+     * @param team        the team
+     * @param position    the position
+     * @param nationality the nationality
+     */
     public Category( Integer id, String name, String team, String position, String nationality) {
         this.id = id;
         this.name = name;
@@ -75,60 +85,129 @@ public class Category {
     }
 
 
-
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
 
+    /**
+     * Gets answers.
+     *
+     * @return the answers
+     */
     public List<Answer> getAnswers() {
         return answers;
     }
 
+    /**
+     * Sets answers.
+     *
+     * @param answers the answers
+     */
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 
+    /**
+     * Gets questions.
+     *
+     * @return the questions
+     */
     public List<Question> getQuestions() {
         return questions;
     }
 
+    /**
+     * Sets questions.
+     *
+     * @param questions the questions
+     */
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets team.
+     *
+     * @return the team
+     */
     public String getTeam() {
         return team;
     }
 
+    /**
+     * Sets team.
+     *
+     * @param team the team
+     */
     public void setTeam(String team) {
         this.team = team;
     }
 
+    /**
+     * Gets position.
+     *
+     * @return the position
+     */
     public String getPosition() {
         return position;
     }
 
+    /**
+     * Sets position.
+     *
+     * @param position the position
+     */
     public void setPosition(String position) {
         this.position = position;
     }
 
+    /**
+     * Gets nationality.
+     *
+     * @return the nationality
+     */
     public String getNationality() {
         return nationality;
     }
 
+    /**
+     * Sets nationality.
+     *
+     * @param nationality the nationality
+     */
     public void setNationality(String nationality) {
         this.nationality = nationality;
     }

@@ -9,12 +9,17 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Datenbankverbindund durhc JPA
+ * Sc
+ */
 public interface LeagueRepository extends JpaRepository<League, String> {
 
     /**
      * Methode welche eine Liga anhand seines Nanens atribut ausliest
-     * @param name
-     * @return
+     *
+     * @param name the name
+     * @return the league
      */
     League findByName(String name);  // korrekte Schreibweise (mit Großbuchstabe B)
 
@@ -26,11 +31,11 @@ public interface LeagueRepository extends JpaRepository<League, String> {
     Optional<League> findById(@Param("id") String id);
 
     /**
-     *Eine Liga Datensatz wird wird anhand des Attributs name also namen der Liga ausgelesen
-     * @param name
+     * Eine Liga Datensatz wird wird anhand des Attributs name also namen der Liga ausgelesen
+     *
+     * @param name the name
      * @return List<League>
      */
-
     List<League> findAllByName(String name);
 
 

@@ -21,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 
+/**
+ * The type Player validator test.
+ */
 @ExtendWith(MockitoExtension.class)
 
 
@@ -30,12 +33,27 @@ public class PlayerValidatorTest
 {
 
 
+    /**
+     * The Player repo.
+     */
     @Mock PlayerRepository playerRepo;
+    /**
+     * The Team repo.
+     */
     @Mock TeamRepository teamRepo;
+    /**
+     * The League repo.
+     */
     @Mock LeagueRepository leagueRepo;
 
+    /**
+     * The Validator.
+     */
     @InjectMocks PlayerValidierung validator;
 
+    /**
+     * Test valid player.
+     */
     @Test
     void testValidPlayer() {
 
@@ -62,12 +80,18 @@ public class PlayerValidatorTest
         assertDoesNotThrow(()->validator.validatePlayer(10));
     }
 
+    /**
+     * Test player not found.
+     */
     @Test
     void testPlayerNotFound() {
         when(playerRepo.findById(10)).thenReturn(Optional.empty());
         assertThrows(ValidationException.class, () -> validator.validatePlayer(10));
     }
 
+    /**
+     * Test team not found.
+     */
     @Test
     void testTeamNotFound() {
         Player p = new Player();
@@ -89,6 +113,9 @@ public class PlayerValidatorTest
 
     }
 
+    /**
+     * Test league not found.
+     */
     @Test
     void testLeagueNotFound() {
         Player p = new Player();

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class Fussballapplikation {
 
     /**
-     *  Runnable Main Applikation im Root Example  üebr allen Packages Controller, Serc und Repository liegt
+     * Runnable Main Applikation im Root Example  über allen Packages Controller, Serc und Repository liegt
      *
-     *
+     * @param args the input arguments
      */
     public static void main(String[] args) {
         SpringApplication.run(Fussballapplikation.class, args);}
@@ -26,7 +26,8 @@ public class Fussballapplikation {
 
     /**
      * Test Request für Funktionalität Rest APplikation mit Greeting HTTP Methode
-     * @param name
+     *
+     * @param name the name
      * @return name
      */
     @GetMapping("/greetings")
