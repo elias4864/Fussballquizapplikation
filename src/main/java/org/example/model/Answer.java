@@ -27,13 +27,13 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-    @JsonIgnore
+    @JsonBackReference(value = "question-answer")
     private Question question;
 
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonIgnore
+    @JsonBackReference(value = "category-answers") // Muss exakt wie in Category heißen!
     private Category category;
 
 
@@ -62,7 +62,7 @@ public class Answer {
     }
 
     /**
-     * Instantiates a new Answer.
+     * Instantiates a new  Answer Konstruktor
      *
      * @param id       the id
      * @param question the question
@@ -78,6 +78,8 @@ public class Answer {
         this.player = player;
         this.team = team;
         this.league = league;
+
+
     }
 
     /**
@@ -187,6 +189,8 @@ public class Answer {
     public void setLeague(League league) {
         this.league = league;
     }
+
+
 }
 
 

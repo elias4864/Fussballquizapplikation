@@ -12,19 +12,23 @@ import org.example.repository.TeamRepository;
 import org.example.repository.LeagueRepository;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 /**
  * The type Player validierung.
  */
 @Component
 public class PlayerValidierung {
-
+    /**
+     * Dependency zu playerRepository Schnittstelle mit allen benötigten Methoden die initalisiert werden
+     */
 
     private final PlayerRepository playerRepository;
     private final TeamRepository teamRepository;
     private final LeagueRepository leagueRepository;
 
     /**
-     * Instantiates a new Player validierung.
+     * Instantiates a new Player validierung Konstruktor.
      *
      * @param playerRepository the player repository
      * @param teamRepository   the team repository
@@ -59,6 +63,13 @@ public class PlayerValidierung {
         }
 
         System.out.println("✔ Spieler erfolgreich validiert: " + playerId);
+
+
+
     }
+
+
+
+
 
 }

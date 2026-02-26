@@ -36,13 +36,13 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonBackReference
+    @JsonBackReference(value = "category-questions") // Muss exakt wie in Category heißen!
     private Category category;
 
 
     @ManyToOne
     @JoinColumn(name = "team_id")
-    @JsonBackReference
+    @JsonBackReference(value="team-questions")
     private Team team;
     /**
      * Jeder SPieler wird eine
@@ -54,7 +54,7 @@ public class Question {
     // <--- Dieser Name muss mit 'mappedBy' übereinstimmen!
 
     @OneToOne(mappedBy = "question")
-    @JsonIgnore
+    @JsonManagedReference(value = "question-player") // Name für diese Beziehung
     private Player player;
 
 
@@ -64,8 +64,11 @@ public class Question {
     private League league;
 
     @OneToMany(mappedBy = "question")
-    @JsonManagedReference
+    @JsonManagedReference(value="question-answer")
     private List<Answer> answers = new ArrayList<>();
+
+
+
 
     /**
      * The enum Difficulty.
@@ -90,8 +93,8 @@ public class Question {
      */
 // Standard-Konstruktor (für JPA)
     public Question() {
+        // Muss vorhanden sein!
     }
-
 
     /**
      * Instantiates a new Question.

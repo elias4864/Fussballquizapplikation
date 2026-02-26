@@ -5,7 +5,12 @@ import org.example.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.stereotype.Service;
+
+// Diese beiden fehlen in deinem Entwurf:
 import java.util.List;
+
+
 
 /**
  * spezielle Annotation damit Spring weiss dass es  bei dieser Klasse tatsächlich um Service handelt

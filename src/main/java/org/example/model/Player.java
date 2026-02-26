@@ -3,6 +3,7 @@ package org.example.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -25,14 +26,14 @@ public class Player {
 
 
     /**
-     * ANnotaiton Generated Value markiert Id als Proary keys  für die HTTP Request Abfrage im PlayerCOntroller
+     * Annotation Generated Value markiert Id als Primarry Keys  für die HTTP Request Abfrage im PlayerCOntroller
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * FirstName
+     * Firstname mit der Länge 100 Zeichen
      */
 
     @Column(name = "first_name", length = 100)
@@ -40,7 +41,7 @@ public class Player {
 
 
     /**
-     * lastName Row wird hinzugefügt
+     * lastName Row wird hinzugefügt und mit der Länge 200
      */
     @Column(name = "last_name", length = 200)
     private String lastName;
@@ -64,30 +65,32 @@ public class Player {
 
 
     /**
-     * ALle  bidirektionbalen Beziehungen werden ignoriert
+     * ALle  bidirektionbalen Beziehungen werden  wie Felder ignoriert werden
      */
     @ManyToOne
     @JoinColumn(name = "team_id")
     @JsonIgnore
     private Team team;
 
+
+
     /**
-     * Managed Reference der Player Tabelle und Antowrten Liste
+     * Managed Reference der Player Tabelle und Antowrten Liste mit gegenseitiger Beziehung
      */
 
     /**
      * Die Frage, die sich direkt auf diesen Spieler bezieht (1:1).
      */
 
- ;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "question_id")
-    @JsonIgnore
-    private Question question;
 
+    @OneToOne // Falls es 1:1 ist, sonst @ManyToOne wie in deinem Code
+    @JoinColumn(name = "question_id")
+    @JsonBackReference(value = "question-player") // MUSS exakt wie der Wert in Question heißen
+    private Question question;
     /**
      * Managed Reference der Player Tabelle und Antowrten Liste
      */
+
 
 
 
@@ -105,6 +108,8 @@ public class Player {
 
 
 
+
+    @Column(name = "isactive")
     private boolean isactive;
 
     /**

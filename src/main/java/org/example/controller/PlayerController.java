@@ -1,18 +1,24 @@
 package org.example.controller;
 
+
 import org.example.model.Player;
 import org.example.service.PlayerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
+
+// 2. Spring Web Annotationen
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 /**
  * The type Player controller.
  */
 @RestController
 @RequestMapping("/players")
+@CrossOrigin(origins = "http://localhost:5173")
+
 public class PlayerController {
 
 
@@ -98,14 +104,6 @@ public class PlayerController {
      * @param playerDetails the player details
      * @return the response entity
      */
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Player> updatePlayer(@PathVariable Integer id, @RequestBody Player playerDetails) {
-        // Der Service erledigt die Arbeit
-        Player updatedPlayer = playerService.updatePlayer(id, playerDetails);
-
-        // Wir geben den aktualisierten Spieler zurück
-        return ResponseEntity.ok(updatedPlayer);
-    }
 
     /**
      * Sucht Spieler basierend auf ihrer Nationalität.
@@ -128,6 +126,7 @@ public class PlayerController {
     public List<Player> getPlayersByStats(@PathVariable String stats) {
         return playerService.findByStats(stats);
     }
+
 
     /**
      * Ein Spieler mit einem bestimen VOrnamen wir anhand der PathVariabel firstName entfernt

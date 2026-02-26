@@ -29,117 +29,56 @@ import static org.mockito.Mockito.when;
 
 
 
-public class PlayerValidatorTest
-{
+public class PlayerValidatorTest {
+
+@Mock PlayerRepository playerRepo;
+@Mock TeamRepository teamRepo;
+@Mock LeagueRepository leagueRepo;
+
+@InjectMocks PlayerValidierung validator;
+
+@Test
+void testValidPlayer_ShouldPass() {
+    // Arrange
+    int playerId = 1;
+
+    int teamId = 100;
+    String leagueId = "CL";
 
 
-    /**
-     * The Player repo.
-     */
-    @Mock PlayerRepository playerRepo;
-    /**
-     * The Team repo.
-     */
-    @Mock TeamRepository teamRepo;
-    /**
-     * The League repo.
-     */
-    @Mock LeagueRepository leagueRepo;
-
-    /**
-     * The Validator.
-     */
-    @InjectMocks PlayerValidierung validator;
-
-    /**
-     * Test valid player.
-     */
-    @Test
-    void testValidPlayer() {
-
-        Player p = new Player();
-        p.setId(1);
-
-        Player p1 = new Player();
-        p.setId(10);
-
-        Team t = new Team();
-        t.setId(100);
-
-        League l = new League();
-        l.setId("CL");
-
-        p.setTeam(t);
-        t.setLeague(l);
+    int id = 20;
 
 
-        when(playerRepo.findById(1)).thenReturn(Optional.of(p));
-        when(playerRepo.findById(10)).thenReturn(Optional.of(p));
 
-        assertDoesNotThrow(() -> validator.validatePlayer(1));
-        assertDoesNotThrow(()->validator.validatePlayer(10));
-    }
+    League league = new League(); league.setId(leagueId);
+    Team team = new Team(); team.setId(teamId); team.setLeague(league);
+    Player player = new Player(); player.setId(playerId); player.setTeam(team);
 
-    /**
-     * Test player not found.
-     */
-    @Test
-    void testPlayerNotFound() {
-        when(playerRepo.findById(10)).thenReturn(Optional.empty());
-        assertThrows(ValidationException.class, () -> validator.validatePlayer(10));
-    }
+    when(playerRepo.findById(playerId)).thenReturn(Optional.of(player));
+    when(teamRepo.findById(teamId)).thenReturn(Optional.of(team));
+    when(leagueRepo.findById(leagueId)).thenReturn(Optional.of(league));
 
-    /**
-     * Test team not found.
-     */
-    @Test
-    void testTeamNotFound() {
-        Player p = new Player();
-        p.setId(1);
-        Player p1 = new Player();
-        p1.setId(10);
+    // Act & Assert
+    assertDoesNotThrow(() -> validator.validatePlayer(playerId));
+    assertDoesNotThrow(()->validator.validatePlayer(playerId));
+}
 
-        Team missingTeam = new Team();
-        missingTeam.setId(999);
-        p.setTeam(missingTeam);
-        p1.setTeam(missingTeam);
+@Test
+void testTeamNotFound_ShouldThrow() {
+    // Arrange
+    int playerId = 1;
+    int teamId = 999;
 
-        when(playerRepo.findById(1)).thenReturn(Optional.of(p));
-        when(playerRepo.findById(10)).thenReturn(Optional.of(p1));
-        when(teamRepo.findById(999)).thenReturn(Optional.empty());
+    Team team = new Team(); team.setId(teamId);
+    Player player = new Player(); player.setId(playerId); player.setTeam(team);
 
-        assertThrows(ValidationException.class, () -> validator.validatePlayer(1));
-        assertThrows(ValidationException.class, ()->validator.validatePlayer(10));
+    when(playerRepo.findById(playerId)).thenReturn(Optional.of(player));
+    // WICHTIG: Explizit sagen, dass das Team fehlt
+    when(teamRepo.findById(teamId)).thenReturn(Optional.empty());
 
-    }
-
-    /**
-     * Test league not found.
-     */
-    @Test
-    void testLeagueNotFound() {
-        Player p = new Player();
-        p.setId(1);
-
-        Player p1 = new Player();
-        p1.setId(10);
-
-        Team t = new Team();
-        t.setId(100);
-        League missing = new League();
-        missing.setId("XX");
-
-        t.setLeague(missing);
-        p.setTeam(t);
-        p1.setTeam(t);
-
-        when(playerRepo.findById(1)).thenReturn(Optional.of(p));
-        when(teamRepo.findById(100)).thenReturn(Optional.of(t));
-        when(playerRepo.findById(10)).thenReturn(Optional.of(p1));
-        when(leagueRepo.findById("XX")).thenReturn(Optional.empty());
-
-        assertThrows(ValidationException.class, () -> validator.validatePlayer(1));
-        assertThrows(ValidationException.class,()-> validator.validatePlayer(10));
-    }
+    // Act & Assert
+    assertThrows(ValidationException.class, () -> validator.validatePlayer(playerId));
+    assertThrows(ValidationException.class, ()->validator.validatePlayer(playerId));
+}
 
 }

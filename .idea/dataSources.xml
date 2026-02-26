@@ -8,18 +8,11 @@
       <jdbc-url>jdbc:mysql://localhost:3307/fussball_quiz</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="fussball_quiz@localhost [2]" uuid="4e4cf5e0-6abb-4c29-b4eb-989bc1855f97">
-      <driver-ref>mysql.8</driver-ref>
+    <data-source source="LOCAL" name="fussball_quiz@localhost [2]" uuid="641c0228-972b-4829-932a-2adca54a6092">
+      <driver-ref>mysql_aurora.aws_wrapper</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/fussball_quiz</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="@localhost" uuid="23e44f69-ad42-4c0a-a579-146f64907d81">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+      <jdbc-driver>software.amazon.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:aws-wrapper:mysql://localhost:3306/fussball_quiz</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

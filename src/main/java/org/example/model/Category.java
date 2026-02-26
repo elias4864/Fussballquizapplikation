@@ -1,6 +1,8 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +33,7 @@ public class Category {
      *Attribut name
      */
     @Column(name = "category_name", nullable = false)
-    private String name;
+    private String category_name;
 
     /**
      *Team Attribut wird hinzugefügt
@@ -50,17 +52,24 @@ public class Category {
     @Column(name="nationality")
     private String nationality;
 
-    @OneToMany(mappedBy = "category")
-    @JsonManagedReference // "Managed" bedeutet: Zeig mir die Antworten
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // Verhindert Fehler beim POST
+    @JsonManagedReference(value = "category-answers") // Eindeutiger Name!
     private List<Answer> answers = new ArrayList<>();
 
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference// "Managed" bedeutet: Zeig mir die Fragen
+    @JsonManagedReference(value = "category-questions") // Eindeutiger Name!
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // Verhindert Fehler beim POST
     private List<Question> questions = new ArrayList<>();
 
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonBackReference(value = "category-questions") // Hier BackReference, da Category die Liste hält
+    private Category category;
+
     /**
-     * Instantiates a new Category.
+     * Instantiates a new Category mit einem Kontruktor an empty  Constructor.
      */
     public Category(){
 
@@ -68,17 +77,17 @@ public class Category {
 
 
     /**
-     * Instantiates a new Category.
+     * Instantiates a new Category mit dem Konstruktor mit dne Attributen id, name, team, position und nationality x.
      *
      * @param id          the id
-     * @param name        the name
+     * @param category_name        the name
      * @param team        the team
      * @param position    the position
      * @param nationality the nationality
      */
-    public Category( Integer id, String name, String team, String position, String nationality) {
+    public Category( Integer id, String category_name, String team, String position, String nationality) {
         this.id = id;
-        this.name = name;
+        this.category_name = category_name;
         this.team = team;
         this.position = position;
         this.nationality = nationality;
@@ -108,10 +117,13 @@ public class Category {
      *
      * @return the name
      */
-    public String getName() {
-        return name;
+    public String getCategory_name() {
+        return category_name;
     }
 
+    public void setCategory_name(String category_name) {
+        this.category_name = category_name;
+    }
 
     /**
      * Gets answers.
@@ -154,9 +166,6 @@ public class Category {
      *
      * @param name the name
      */
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * Gets team.

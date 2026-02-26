@@ -66,7 +66,7 @@ public class AnswerService {
 
 
     /**
-     * Add answer answer.
+     * Add answer der Answer Liste answer.
      *
      * @param a the a
      * @return the answer
@@ -76,7 +76,7 @@ public class AnswerService {
     }
 
     /**
-     * Delete answer.
+     * Delete an answeranswer.
      *
      * @param id the id
      */

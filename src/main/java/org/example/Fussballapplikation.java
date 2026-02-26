@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Fussballapplikation {
 
     /**
-     * Runnable Main Applikation im Root Example  über allen Packages Controller, Serc und Repository liegt
+     * Runnable Main Applikation im Root Example  über allen Packages Controller, Service und Repository liegt
      *
      * @param args the input arguments
      */

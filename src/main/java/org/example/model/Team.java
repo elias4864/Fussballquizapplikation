@@ -37,6 +37,10 @@ public class Team {
     @JsonIgnore
     private List<Player> players;
 
+
+    /**
+     * EIn Spieler gehört zu mehrenr Fragen in der Quesiton Liste
+     */
     @OneToMany(mappedBy = "team")
     @JsonIgnore
     private List<Question> questions;

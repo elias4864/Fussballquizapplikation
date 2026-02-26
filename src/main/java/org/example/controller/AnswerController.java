@@ -1,19 +1,23 @@
 package org.example.controller;
 
+
 import org.example.model.Answer;
-import org.example.model.Team;
 import org.example.service.AnswerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
-
-import static java.util.Arrays.stream;
-
 /**
  * The type Answer controller.
  */
 @RestController
 @RequestMapping("/answers")
+@CrossOrigin(origins = "http://localhost:5173")
+
 public class AnswerController {
 
 
@@ -46,15 +50,9 @@ public class AnswerController {
                 .toList();
     }
 
-    /**
-     * Filtert alle  Datensätze aus der Answer List  basierend auf der Id der zugehörigen Frage und füg
-     * @param id
-     * @return Alle Datensätze welche eine zugehörigen Frage anhand der Id angehören werden durch mit einem Stream gefiltert und mit eien Lamda Expression abefragt ob sie eine bestimtem Id entsprechen und dann zu einer neuen Liste hinzugefügt
-     */
-
 
     /**
-     * ALle möglichen Antworten der Datenbank werden mit der Meethoden von JPA vordefinierten Methdoe findALl ausgegeben
+     * ALle möglichen Antworten der Datenbank werden mit der Methoden von JPA vordefinierten Methdoe findALl ausgegeben
      *
      * @return List Answer mit allen Antworten
      */
@@ -63,12 +61,6 @@ public class AnswerController {
         return answerService.getAllAnswers();
     }
 
-
-    /**
-     * Gibt das zugehörige Team einer bestimmten Antwort zurück dafür wird ein neue ANswer Objet vom Ansew Servic initialisier tmit der vim Sevci definerit methode  geAnswerById welc zu eien m Tema die  Frage eanhand der Id sucht
-     * @param answerId Die ID der Antwort
-     * @return Das Team-Objekt, zu dem die Antwort gehört
-     */
 
 
 

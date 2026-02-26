@@ -27,13 +27,16 @@ public class League {
 
 
     /**
-     * Alle Ligen
+     * Alle Ligen haben mehrere Questions
      */
     @OneToMany(mappedBy = "league")
     @JsonManagedReference
     private List<Question> questions = new ArrayList<>();
 
 
+    /**
+     * Mehrere Antworten gehören zu einer spzezifischen Liga
+     */
 
     @OneToMany(mappedBy = "league")
     @JsonManagedReference
