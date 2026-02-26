@@ -33,7 +33,6 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonBackReference(value = "category-answers") // Muss exakt wie in Category heißen!
     private Category category;
 
 

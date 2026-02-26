@@ -31,6 +31,12 @@ public class QuestionController {
         return questionRepository.findAll();
     }
 
+
+
+
+
+
+
     // GET: Eine einzelne Frage nach ID
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable Integer id) {
