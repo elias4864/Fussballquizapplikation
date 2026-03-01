@@ -27,13 +27,13 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-    @JsonIgnore
+    @JsonBackReference(value = "question-answer")
     private Question question;
 
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonIgnore
+    @JsonBackReference(value = "category-answers") // NEU
     private Category category;
 
 
@@ -78,6 +78,8 @@ public class Answer {
         this.player = player;
         this.team = team;
         this.league = league;
+
+
     }
 
     /**
@@ -186,6 +188,18 @@ public class Answer {
      */
     public void setLeague(League league) {
         this.league = league;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", question=" + question +
+                ", category=" + category +
+                ", player=" + player +
+                ", team=" + team +
+                ", league=" + league +
+                '}';
     }
 }
 

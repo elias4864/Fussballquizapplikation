@@ -83,14 +83,14 @@ public class Player {
      */
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne // Falls es 1:1 ist, sonst @ManyToOne wie in deinem Code
     @JoinColumn(name = "question_id")
-    @JsonIgnore
+    @JsonBackReference(value = "question-player") // MUSS exakt wie der Wert in Question heißen
     private Question question;
-
     /**
      * Managed Reference der Player Tabelle und Antowrten Liste
      */
+
 
 
 

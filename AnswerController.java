@@ -1,19 +1,23 @@
 package org.example.controller;
 
+
 import org.example.model.Answer;
-import org.example.model.Team;
 import org.example.service.AnswerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
-
-import static java.util.Arrays.stream;
-
 /**
  * The type Answer controller.
  */
 @RestController
 @RequestMapping("/answers")
+@CrossOrigin(origins = "http://localhost:5173")
+
 public class AnswerController {
 
 

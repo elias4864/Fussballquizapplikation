@@ -1,216 +1,99 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Repräsentiert eine Quiz-Kategorie (z. B. Nationalität, Verein).
- * Verwaltet die bidirektionalen Beziehungen zu Fragen und Antworten
- * mittels Jackson-Referenzen zur Vermeidung von Rekursionen.
- * Mit At Tbael erstltl einen Tabelle Category
- */
 @Entity
 @Table(name = "category")
 public class Category {
 
-
-    /**
-     * Automatisch geneirtet Attribut id  das Primary Key
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
     /**
-     *Attribut name
+     * KORREKTUR: Dies ist ein einfaches Textfeld.
+     * @ManyToOne und @JoinColumn wurden hier entfernt.
      */
     @Column(name = "category_name", nullable = false)
-    private String name;
+    private String category_name;
 
-    /**
-     *Team Attribut wird hinzugefügt
-     */
     @Column(name="team")
     private String team;
 
-
-
-
-    /**
-     * Positition Attibut
-     */
     @Column(name="position")
     private String position;
+
     @Column(name="nationality")
     private String nationality;
 
-    @OneToMany(mappedBy = "category")
-    @JsonManagedReference // "Managed" bedeutet: Zeig mir die Antworten
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "category-answers")
     private List<Answer> answers = new ArrayList<>();
 
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference// "Managed" bedeutet: Zeig mir die Fragen
+    @JsonManagedReference(value = "category-questions")
     private List<Question> questions = new ArrayList<>();
 
-
     /**
-     * Instantiates a new Category mit einem Kontruktor an empty  Constructor.
+     * Falls eine Kategorie einer Ober-Kategorie untergeordnet ist.
+     * KORREKTUR: Eindeutiger Name für value in JsonBackReference.
      */
+    @OneToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     public Category(){
-
     }
 
-
-    /**
-     * Instantiates a new Category mit dem Konstruktor mit dne Attributen id, name, team, position und nationality .
-     *
-     * @param id          the id
-     * @param name        the name
-     * @param team        the team
-     * @param position    the position
-     * @param nationality the nationality
-     */
-    public Category( Integer id, String name, String team, String position, String nationality) {
+    public Category(Integer id, String category_name, String team, String position, String nationality) {
         this.id = id;
-        this.name = name;
+        this.category_name = category_name;
         this.team = team;
         this.position = position;
         this.nationality = nationality;
     }
 
+    // GETTER UND SETTER
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
+    public Category getCategory() { return category; }
+    public void setCategory(Category category) { this.category = category; }
+
+    public String getCategory_name() { return category_name; }
+    public void setCategory_name(String category_name) { this.category_name = category_name; }
+
+    public List<Answer> getAnswers() { return answers; }
+    public void setAnswers(List<Answer> answers) { this.answers = answers; }
+
+    public List<Question> getQuestions() { return questions; }
+    public void setQuestions(List<Question> questions) { this.questions = questions; }
+
+    public String getTeam() { return team; }
+    public void setTeam(String team) { this.team = team; }
+
+    public String getPosition() { return position; }
+    public void setPosition(String position) { this.position = position; }
+
+    public String getNationality() { return nationality; }
+    public void setNationality(String nationality) { this.nationality = nationality; }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", category_name='" + category_name + '\'' +
+                ", team='" + team + '\'' +
+                ", position='" + position + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", answers=" + answers +
+                ", questions=" + questions +
+                ", category=" + category +
+                '}';
     }
-
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * Gets name.
-     *
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-
-    /**
-     * Gets answers.
-     *
-     * @return the answers
-     */
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    /**
-     * Sets answers.
-     *
-     * @param answers the answers
-     */
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
-
-    /**
-     * Gets questions.
-     *
-     * @return the questions
-     */
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    /**
-     * Sets questions.
-     *
-     * @param questions the questions
-     */
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
-    /**
-     * Sets name.
-     *
-     * @param name the name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Gets team.
-     *
-     * @return the team
-     */
-    public String getTeam() {
-        return team;
-    }
-
-    /**
-     * Sets team.
-     *
-     * @param team the team
-     */
-    public void setTeam(String team) {
-        this.team = team;
-    }
-
-    /**
-     * Gets position.
-     *
-     * @return the position
-     */
-    public String getPosition() {
-        return position;
-    }
-
-    /**
-     * Sets position.
-     *
-     * @param position the position
-     */
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    /**
-     * Gets nationality.
-     *
-     * @return the nationality
-     */
-    public String getNationality() {
-        return nationality;
-    }
-
-    /**
-     * Sets nationality.
-     *
-     * @param nationality the nationality
-     */
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-
 }

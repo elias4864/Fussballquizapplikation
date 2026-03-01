@@ -5,7 +5,7 @@ import org.example.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.MediaType; // Wichtiger Import
 import java.util.List;
 
 @RestController
@@ -31,6 +31,24 @@ public class QuestionController {
         return questionRepository.findAll();
     }
 
+
+
+
+
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<Question> addQuestion(@RequestBody Question question) {
+        // 1. Die Beziehung zwischen Frage und Antworten synchronisieren
+        if (question.getAnswers() != null) {
+            question.getAnswers().forEach(a -> a.setQuestion(question));
+        }
+
+        // 2. Die neue Frage in der Datenbank speichern
+        questionRepository.save(question);
+
+        // 3. Die gesamte Liste aller Fragen zurückgeben
+        return questionRepository.findAll();
+    }
+
     // GET: Eine einzelne Frage nach ID
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable Integer id) {
@@ -39,11 +57,7 @@ public class QuestionController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Geändert von @PutMapping zu @PostMapping, passend zum React-Fetch
-    @PostMapping("/add")
-    public Question addQuestion(@RequestBody Question question) {
-        return questionService.addQuestion(question);
-    }
+
 
     @DeleteMapping("/delete/{id}")
     public void deleteQuestion(@PathVariable int id) {
