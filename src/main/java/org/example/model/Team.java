@@ -42,7 +42,7 @@ public class Team {
      * EIn Spieler gehört zu mehrenr Fragen in der Quesiton Liste
      */
     @OneToMany(mappedBy = "team")
-    @JsonIgnore
+    @JsonManagedReference(value="team-questions")
     private List<Question> questions;
 
 
@@ -137,6 +137,16 @@ public class Team {
      *
      * @return the league
      */
+
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
     public League getLeague() {
         return league;
     }
@@ -149,6 +159,18 @@ public class Team {
     public void setLeague(League league) {
         this.league = league;
     }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", teamName='" + teamName + '\'' +
+                ", league=" + league +
+                ", players=" + players +
+                ", questions=" + questions +
+                '}';
+    }
 }
+
 
 

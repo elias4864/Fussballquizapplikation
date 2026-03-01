@@ -47,10 +47,7 @@ public class PlayerService {
     /**
      * Ein Spieler wirde aktualisiert und die Attribute FIrstName, LastName , BirthYear, Nationality. Stats, IsActive, Position werden  geändert und überprüft sowie in Repository gespeichert , Falls ein Spiler nicht  anhand der Id gefunden wrid eine neue ID erstellt
      *
-     * @param id
-     * @param details
-     * @return the all players
-     */
+
     public List<Player> getAllPlayers() {
         return playerRepository.findAll();
     }

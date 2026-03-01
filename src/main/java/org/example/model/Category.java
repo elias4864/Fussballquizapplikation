@@ -32,22 +32,19 @@ public class Category {
     private String nationality;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonManagedReference(value = "category-answers")
     private List<Answer> answers = new ArrayList<>();
 
     @OneToMany(mappedBy = "category")
     @JsonManagedReference(value = "category-questions")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Question> questions = new ArrayList<>();
 
     /**
      * Falls eine Kategorie einer Ober-Kategorie untergeordnet ist.
      * KORREKTUR: Eindeutiger Name für value in JsonBackReference.
      */
-    @ManyToOne
-    @JoinColumn(name = "parent_category_id")
-    @JsonBackReference(value = "parent-category-subcategories")
+    @OneToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 
     public Category(){
@@ -85,4 +82,18 @@ public class Category {
 
     public String getNationality() { return nationality; }
     public void setNationality(String nationality) { this.nationality = nationality; }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", category_name='" + category_name + '\'' +
+                ", team='" + team + '\'' +
+                ", position='" + position + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", answers=" + answers +
+                ", questions=" + questions +
+                ", category=" + category +
+                '}';
+    }
 }

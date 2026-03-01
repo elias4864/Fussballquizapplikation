@@ -40,11 +40,6 @@ public class PlayerController {
      * Ruft eine Liste aller registrierten Spieler ab.
      *
      * @return Liste aller Spieler.
-     */
-    @GetMapping("/all")
-    public List<Player> getPlayers() {
-        return playerService.getAllPlayers();
-    }
 
     /**
      * Ruft alle derzeit aktiven Spieler ab.

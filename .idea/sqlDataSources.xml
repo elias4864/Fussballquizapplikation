@@ -44,6 +44,24 @@
           </option>
           <option name="outLayout" value="File per object by schema.groovy" />
         </State>
+        <State>
+          <option name="id" value="7b85717b-5f71-4e75-b4f4-7846cc9539a2" />
+          <option name="name" value="DDL data source" />
+          <option name="dbmsName" value="UNKNOWN" />
+          <option name="urls">
+            <array />
+          </option>
+          <option name="outLayout" value="File per object by schema.groovy" />
+        </State>
+        <State>
+          <option name="id" value="7b178f5b-6d3f-45a4-9297-9f0974d77133" />
+          <option name="name" value="DDL data source" />
+          <option name="dbmsName" value="UNKNOWN" />
+          <option name="urls">
+            <array />
+          </option>
+          <option name="outLayout" value="File per object by schema.groovy" />
+        </State>
       </list>
     </option>
   </component>

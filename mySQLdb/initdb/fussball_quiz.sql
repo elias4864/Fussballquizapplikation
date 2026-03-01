@@ -9,7 +9,7 @@ CREATE TABLE league (
                         name VARCHAR(200) NOT NULL
 );
 
-INSERT INTO league (id  , name) VALUES
+INSERT INTO league (id, name) VALUES
                                   ('SL', 'Super League'), ('LL', 'La Liga'), ('EL', 'Europa League'),
                                   ('BL', 'Bundesliga'), ('PL', 'Premier League'), ('CL', 'Champions League'),
                                   ('CA', 'Copa América'), ('SA','Serie A');
@@ -100,65 +100,11 @@ CREATE TABLE answer (
 
 -- Beispiel-Antworten für Frage 1
 INSERT INTO answer (question_id, answer_text, is_correct) VALUES
--- Antworten zu Frage 1 (Yann Sommer)
-(1, 'Inter Mailand', TRUE),
-(1, 'FC Basel', FALSE),
-(1, 'Bayern München', FALSE),
-(1, 'Borussia Mönchengladbach', FALSE),
+                                                              (1, 'Inter Mailand', TRUE), (1, 'FC Zürich', FALSE), (1, 'FC Basel', FALSE), (1, 'FC Luzern', FALSE),
+-- Beispiel-Antworten für Frage 2
+                                                              (2, '0 Tore', TRUE), (2, '1 Tor', FALSE), (2, '2 Tore', FALSE), (2, '3 Tore', FALSE);
 
--- Antworten zu Frage 2 (Manuel Akanji)
-(2, '0 Tore', TRUE),
-(2, '1 Tor', FALSE),
-(2, '2 Tore', FALSE),
-(2, '1 Assist', FALSE),
-
--- Antworten zu Frage 3 (Cristiano Ronaldo)
-(3, 'Real Madrid', TRUE),
-(3, 'Manchester United', FALSE),
-(3, 'Juventus Turin', FALSE),
-(3, 'Sporting Lissabon', FALSE),
-
--- Antworten zu Frage 4 (Pelé)
-(4, 'Pelé', TRUE),
-(4, 'Kylian Mbappé', FALSE),
-(4, 'Cristiano Ronaldo', FALSE),
-(4, 'Lionel Messi', FALSE),
-
--- Antworten zu Frage 5 (Iker Casillas)
-(5, 'Iker Casillas', TRUE),
-(5, 'Gianluigi Buffon', FALSE),
-(5, 'Manuel Neuer', FALSE),
-(5, 'Edwin van der Sar', FALSE),
-
--- Antworten zu Frage 6 (Kylian Mbappé)
-(6, '4 Tore', TRUE),
-(6, '3 Tore', FALSE),
-(6, '2 Tore', FALSE),
-(6, '5 Tore', FALSE),
-
--- Antworten zu Frage 7 (Xherdan Shaqiri)
-(7, 'Mittelfeld', TRUE),
-(7, 'Sturm', FALSE),
-(7, 'Verteidiger', FALSE),
-(7, 'Torwart', FALSE),
-
--- Antworten zu Frage 8 (Oliver Kahn)
-(8, 'Oliver', TRUE),
-(8, 'Manuel', FALSE),
-(8, 'Jens', FALSE),
-(8, 'Sepp', FALSE),
-
--- Antworten zu Frage 9 (Diego Maradona)
-(9, 'Argentinien', TRUE),
-(9, 'Brasilien', FALSE),
-(9, 'Uruguay', FALSE),
-(9, 'Mexiko', FALSE);
 -- Benutzer erstellen
 CREATE USER IF NOT EXISTS 'fussball_elias'@'%' IDENTIFIED BY 'momo9010';
 GRANT ALL PRIVILEGES ON fussball_quiz.* TO 'fussball_elias'@'%';
 FLUSH PRIVILEGES;
-
-SELECT * FROM question;
-
-
-

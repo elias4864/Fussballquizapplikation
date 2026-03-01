@@ -33,6 +33,7 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonBackReference(value = "category-answers") // NEU
     private Category category;
 
 
@@ -189,7 +190,17 @@ public class Answer {
         this.league = league;
     }
 
-
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", question=" + question +
+                ", category=" + category +
+                ", player=" + player +
+                ", team=" + team +
+                ", league=" + league +
+                '}';
+    }
 }
 
 
