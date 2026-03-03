@@ -22,5 +22,12 @@
       <jdbc-url>jdbc:mysql://localhost:3306/fussball_quiz</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="fussball_quiz@localhost [3]" uuid="00f7e977-fe49-4bda-aa4d-1861f8cf0d94">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/fussball_quiz</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

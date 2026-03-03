@@ -36,7 +36,7 @@ public class QuestionController {
 
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Question> addQuestion(@RequestBody Question question) {
+    public List <Question> addQuestion(@RequestBody Question question) {
         // 1. Die Beziehung zwischen Frage und Antworten synchronisieren
         if (question.getAnswers() != null) {
             question.getAnswers().forEach(a -> a.setQuestion(question));

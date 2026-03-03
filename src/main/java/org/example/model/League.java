@@ -30,7 +30,7 @@ public class League {
      * Alle Ligen haben mehrere Questions
      */
     @OneToMany(mappedBy = "league")
-    @JsonManagedReference
+    @JsonManagedReference("league-questions")
     private List<Question> questions = new ArrayList<>();
 
 
