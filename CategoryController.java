@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.model.Category;
 import org.example.service.CategoryService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,7 +54,7 @@ public class CategoryController {
      * Erstellt eine neue Kategorie.
      * @param category Die als JSON empfangene Kategorie.
      */
-    @PostMapping("/createcategory")
+    @PostMapping( value="/createcategory" , consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         try {
             Category savedCategory = service.addCategory(category);
