@@ -36,7 +36,7 @@ public class Question {
 
         @ManyToOne
         @JoinColumn(name = "category_id")
-        @JsonBackReference(value = "category-questions") // Muss exakt wie in Category heißen!
+        @JsonBackReference("category-questions")
         private Category category;
 
 
@@ -49,7 +49,10 @@ public class Question {
          */
 
 
-
+        @ManyToOne
+        @JoinColumn(name = "league_id",columnDefinition = "VARCHAR(10)")
+        @JsonBackReference( value="league-questions") // Passend zur League
+        private League league;
 
         // <--- Dieser Name muss mit 'mappedBy' übereinstimmen!
 
@@ -58,10 +61,7 @@ public class Question {
         private Player player;
 
 
-        @ManyToOne
-        @JoinColumn(name = "league_id",columnDefinition = "VARCHAR(10)")
-        @JsonIgnore
-        private League league;
+
 
         @OneToMany(mappedBy = "question",  cascade = CascadeType.ALL, orphanRemoval = true)
         @JsonManagedReference(value="question-answer")

@@ -22,7 +22,7 @@ public class League {
     private String name;
 
     @OneToMany(mappedBy = "league")
-    @JsonManagedReference // Zeigt die Liste der Teams an, wenn eine Liga geladen wird
+    @JsonManagedReference("league-teams")
     private List<Team> teams = new ArrayList<>();
 
 
@@ -30,7 +30,7 @@ public class League {
      * Alle Ligen haben mehrere Questions
      */
     @OneToMany(mappedBy = "league")
-    @JsonManagedReference
+    @JsonManagedReference("league-questions")
     private List<Question> questions = new ArrayList<>();
 
 
@@ -39,7 +39,7 @@ public class League {
      */
 
     @OneToMany(mappedBy = "league")
-    @JsonManagedReference
+    @JsonManagedReference(value="league-answers")
     private  List<Answer> answers = new ArrayList<>();
 
 
