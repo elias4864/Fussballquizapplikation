@@ -50,6 +50,7 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "league_id",columnDefinition = "VARCHAR(10)")
+    @JsonBackReference(value="league-answers")
     private League league;
 
 
